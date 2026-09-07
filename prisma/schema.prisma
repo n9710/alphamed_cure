@@ -1,0 +1,215 @@
+// This is your Prisma schema file
+// Learn more: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// ──────────────────────────────────────────────────────
+// Enums
+// ──────────────────────────────────────────────────────
+
+enum UserRole {
+  customer
+  admin
+}
+
+enum UserStatus {
+  unverified
+  verified
+  suspended
+}
+
+enum InquiryStatus {
+  draft
+  submitted
+  reviewed
+  closed
+}
+
+// ──────────────────────────────────────────────────────
+// User & Auth
+// ──────────────────────────────────────────────────────
+
+model User {
+  id                 String     @id @default(uuid())
+  email              String     @unique
+  passwordHash       String     @map("password_hash")
+  firstName          String?    @map("first_name")
+  lastName           String?    @map("last_name")
+  company            String?
+  phone              String?
+  role               UserRole   @default(customer)
+  status             UserStatus @default(unverified)
+  emailVerifiedAt    DateTime?  @map("email_verified_at")
+  emailVerifyToken   String?    @unique @map("email_verify_token")
+  resetToken         String?    @unique @map("reset_token")
+  resetTokenExpiry   DateTime?  @map("reset_token_expiry")
+  createdAt          DateTime   @default(now()) @map("created_at")
+  updatedAt          DateTime   @updatedAt @map("updated_at")
+
+  sessions           Session[]
+  inquiryCarts       InquiryCart[]
+  analyticsEvents    AnalyticsEvent[]
+
+  @@map("users")
+}
+
+// DB-backed sessions (easily invalidatable, simpler than JWT for SSR)
+model Session {
+  id        String   @id @default(uuid())
+  userId    String   @map("user_id")
+  token     String   @unique
+  expiresAt DateTime @map("expires_at")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([token])
+  @@index([expiresAt])
+  @@map("sessions")
+}
+
+// ──────────────────────────────────────────────────────
+// Catalog
+// ──────────────────────────────────────────────────────
+
+model Category {
+  id             String     @id @default(uuid())
+  name           String
+  slug           String     @unique
+  description    String?
+  imageUrl       String?    @map("image_url")
+  parentId       String?    @map("parent_id")
+  sortOrder      Int        @default(0) @map("sort_order")
+  isActive       Boolean    @default(true) @map("is_active")
+  seoTitle       String?    @map("seo_title")
+  seoDescription String?    @map("seo_description")
+  createdAt      DateTime   @default(now()) @map("created_at")
+
+  parent         Category?  @relation("SubCategories", fields: [parentId], references: [id])
+  children       Category[] @relation("SubCategories")
+  products       Product[]
+
+  @@map("categories")
+}
+
+model Product {
+  id             String        @id @default(uuid())
+  name           String
+  slug           String        @unique
+  sku            String?       @unique
+  description    String?
+  shortDesc      String?       @map("short_desc")
+  categoryId     String?       @map("category_id")
+  isFeatured     Boolean       @default(false) @map("is_featured")
+  isActive       Boolean       @default(true) @map("is_active")
+  images         Json          @default("[]")   // string[] — URLs
+  specifications Json          @default("{}")   // key-value pairs
+  tags           String[]      @default([])
+  seoTitle       String?       @map("seo_title")
+  seoDescription String?       @map("seo_description")
+  createdAt      DateTime      @default(now()) @map("created_at")
+  updatedAt      DateTime      @updatedAt @map("updated_at")
+
+  category       Category?     @relation(fields: [categoryId], references: [id])
+  price          ProductPrice?
+  cartItems      InquiryCartItem[]
+
+  @@index([isActive, isFeatured])
+  @@index([categoryId])
+  @@map("products")
+}
+
+// Separate table — NEVER joined in public queries
+model ProductPrice {
+  id          String   @id @default(uuid())
+  productId   String   @unique @map("product_id")
+  priceINR    Decimal  @map("price_inr") @db.Decimal(12, 2)
+  priceUSD    Decimal? @map("price_usd") @db.Decimal(12, 2)
+  unit        String   @default("unit")
+  minOrderQty Int      @default(1) @map("min_order_qty")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  product     Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@map("product_prices")
+}
+
+// ──────────────────────────────────────────────────────
+// Inquiry Cart
+// ──────────────────────────────────────────────────────
+
+model InquiryCart {
+  id        String          @id @default(uuid())
+  userId    String          @map("user_id")
+  status    InquiryStatus   @default(draft)
+  notes     String?
+  createdAt DateTime        @default(now()) @map("created_at")
+  updatedAt DateTime        @updatedAt @map("updated_at")
+
+  user      User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items     InquiryCartItem[]
+
+  @@index([userId, status])
+  @@map("inquiry_carts")
+}
+
+model InquiryCartItem {
+  id        String      @id @default(uuid())
+  cartId    String      @map("cart_id")
+  productId String      @map("product_id")
+  quantity  Int         @default(1)
+  notes     String?
+
+  cart      InquiryCart @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  product   Product     @relation(fields: [productId], references: [id])
+
+  @@unique([cartId, productId])
+  @@map("inquiry_cart_items")
+}
+
+// ──────────────────────────────────────────────────────
+// Contact
+// ──────────────────────────────────────────────────────
+
+model ContactMessage {
+  id        String   @id @default(uuid())
+  name      String
+  email     String
+  company   String?
+  phone     String?
+  subject   String?
+  message   String
+  isRead    Boolean  @default(false) @map("is_read")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("contact_messages")
+}
+
+// ──────────────────────────────────────────────────────
+// Analytics (server-side events — no PII required)
+// ──────────────────────────────────────────────────────
+
+model AnalyticsEvent {
+  id         String   @id @default(uuid())
+  event      String
+  userId     String?  @map("user_id")
+  sessionId  String?  @map("session_id")
+  properties Json     @default("{}")
+  ip         String?
+  userAgent  String?  @map("user_agent")
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  user       User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([event])
+  @@index([createdAt])
+  @@map("analytics_events")
+}

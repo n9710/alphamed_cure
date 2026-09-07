@@ -1,0 +1,177 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --brand-primary: #0052CC;
+    --brand-primary-hover: #0043A8;
+    --brand-navy: #041E42;
+    --brand-navy-light: #0A2540;
+    --brand-blue: #0284C7;
+    --brand-ice: #F0F7FF;
+    --brand-green: #16A34A;
+    --brand-green-dark: #15803D;
+    --brand-green-light: #ECFDF5;
+    --brand-surface: #FAFCFF;
+    --brand-card: #FFFFFF;
+    --brand-border: #E2E8F0;
+    --brand-text: #091E3A;
+    --brand-muted: #64748B;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    background-color: #FAFCFE;
+    color: #091E3A;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+}
+
+/* Elevation & Interactive Hover States */
+.card-hover {
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 35px -8px rgba(4, 30, 66, 0.08), 0 10px 18px -4px rgba(4, 30, 66, 0.04);
+  border-color: #BAE6FD;
+}
+
+.card-hover:active {
+  transform: translateY(-1px);
+}
+
+/* Glassmorphism Styles */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(226, 232, 240, 0.85);
+}
+
+.glass-panel-dark {
+  background: rgba(4, 30, 66, 0.9);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Strategic Gradients */
+.medical-gradient {
+  background: linear-gradient(135deg, #041E42 0%, #0A2540 50%, #0052CC 100%);
+}
+
+.medical-hero-gradient {
+  background: radial-gradient(circle at 80% 20%, rgba(2, 132, 199, 0.08) 0%, rgba(240, 247, 255, 0.6) 40%, #FAFCFE 100%);
+}
+
+.medical-gradient-subtle {
+  background: linear-gradient(180deg, #F0F7FF 0%, #FAFCFE 100%);
+}
+
+/* Status & Verification Badges */
+.badge-verified {
+  background: #ECFDF5;
+  color: #15803D;
+  border: 1px solid #A7F3D0;
+}
+
+.badge-b2b {
+  background: #EFF6FF;
+  color: #1D4ED8;
+  border: 1px solid #BFDBFE;
+}
+
+.badge-gmp {
+  background: #F0FDF4;
+  color: #166534;
+  border: 1px solid #BBF7D0;
+}
+
+/* Skeleton Shimmer */
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton-shimmer {
+  background: linear-gradient(90deg, #F1F5F9 25%, #E2E8F0 50%, #F1F5F9 75%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.8s ease-in-out infinite;
+}
+
+/* Subtle Micro-Animations */
+@keyframes pulse-emerald {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.4);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.05);
+    box-shadow: 0 0 0 6px rgba(22, 163, 74, 0);
+  }
+}
+
+.animate-pulse-emerald {
+  animation: pulse-emerald 2.5s infinite;
+}
+
+@keyframes loader-draw {
+  0% {
+    stroke-dashoffset: 280;
+    opacity: 0.3;
+  }
+  50% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: -280;
+    opacity: 0.3;
+  }
+}
+
+.animate-loader-draw {
+  stroke-dasharray: 280;
+  animation: loader-draw 2.4s ease-in-out infinite;
+}
+
+@keyframes float-subtle {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.animate-float {
+  animation: float-subtle 4s ease-in-out infinite;
+}
+
+/* Scrollbar and Clean UI */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Accessible focus styling */
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: 2px solid #0052CC;
+  outline-offset: 2px;
+}
