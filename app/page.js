@@ -75,9 +75,9 @@ export default async function HomePage() {
   ];
 
   return (
-    <div className="space-y-16 sm:space-y-24 pb-20 overflow-hidden">
-      {/* 1. HERO SECTION — Premium Light Pharmaceutical Composition */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-[#F0F7FF] via-[#FAFCFE] to-white pt-12 sm:pt-16 pb-16 sm:pb-20 border-b border-slate-200/80">
+    <div className="space-y-12 sm:space-y-20 pb-16 sm:pb-20">
+      {/* 1. HERO SECTION */}
+      <section className="relative overflow-hidden bg-gradient-to-b from-[#F0F7FF] via-[#FAFCFE] to-white pt-10 sm:pt-14 pb-14 sm:pb-20 border-b border-slate-200/80">
         {/* Subtle Ambient Radial Gradients */}
         <div className="absolute top-0 right-1/4 w-96 h-96 bg-blue-400/10 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute top-1/3 left-10 w-72 h-72 bg-emerald-400/10 rounded-full blur-3xl pointer-events-none" />
@@ -152,35 +152,35 @@ export default async function HomePage() {
                   <div className="absolute inset-0 bg-gradient-to-t from-[#041E42]/20 via-transparent to-transparent pointer-events-none" />
                 </div>
 
-                {/* Floating Badge 1 (Top Right): Cold-Chain Telemetry */}
-                <div className="absolute -top-4 -right-4 sm:-right-6 bg-white/95 backdrop-blur-md p-3.5 rounded-2xl border border-slate-200 shadow-xl flex items-center gap-3 animate-float">
-                  <div className="w-10 h-10 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600 shrink-0">
-                    <ThermometerSnowflake className="w-5 h-5" />
+                {/* Floating Badge 1 (Top Right): Cold-Chain Telemetry — hidden on smallest screens */}
+                <div className="hidden sm:flex absolute -top-4 -right-2 sm:-right-4 lg:-right-6 bg-white/95 backdrop-blur-md p-3 rounded-2xl border border-slate-200 shadow-xl items-center gap-3 animate-float max-w-[200px]">
+                  <div className="w-9 h-9 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600 shrink-0">
+                    <ThermometerSnowflake className="w-4.5 h-4.5" />
                   </div>
                   <div className="text-left">
-                    <div className="flex items-center gap-1.5">
-                      <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                      <span className="text-[11px] font-bold text-[#041E42] uppercase tracking-wider">
+                    <div className="flex items-center gap-1">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                      <span className="text-[10px] font-bold text-[#041E42] uppercase tracking-wider">
                         Validated Cold-Chain
                       </span>
                     </div>
                     <p className="text-xs font-extrabold text-[#0052CC] font-mono mt-0.5">
-                      2°C – 8°C Active (4.2°C)
+                      2°C – 8°C (4.2°C)
                     </p>
                   </div>
                 </div>
 
-                {/* Floating Badge 2 (Bottom Left): Batch Traceability */}
+                {/* Floating Badge 2 (Bottom Left): Batch Traceability — hidden on smallest screens */}
                 <div
-                  className="absolute -bottom-5 -left-4 sm:-left-6 bg-white/95 backdrop-blur-md p-3.5 rounded-2xl border border-slate-200 shadow-xl flex items-center gap-3 animate-float"
+                  className="hidden sm:flex absolute -bottom-4 -left-2 sm:-left-4 lg:-left-6 bg-white/95 backdrop-blur-md p-3 rounded-2xl border border-slate-200 shadow-xl items-center gap-3 animate-float max-w-[200px]"
                   style={{ animationDelay: '1.5s' }}
                 >
-                  <div className="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-600 shrink-0">
-                    <FileCheck2 className="w-5 h-5" />
+                  <div className="w-9 h-9 rounded-xl bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-600 shrink-0">
+                    <FileCheck2 className="w-4.5 h-4.5" />
                   </div>
                   <div className="text-left">
-                    <div className="flex items-center gap-1 text-emerald-700 font-bold text-[11px] uppercase tracking-wider">
-                      <CheckCircle2 className="w-3.5 h-3.5 inline" />
+                    <div className="flex items-center gap-1 text-emerald-700 font-bold text-[10px] uppercase tracking-wider">
+                      <CheckCircle2 className="w-3 h-3 inline" />
                       <span>COA Lot Assayed</span>
                     </div>
                     <p className="text-xs font-bold text-[#041E42] mt-0.5">

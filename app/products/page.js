@@ -202,34 +202,36 @@ export default async function ProductsPage({ searchParams }) {
           <form
             method="GET"
             action="/products"
-            className="flex gap-2.5 p-1.5 bg-white border border-slate-200/90 rounded-2xl shadow-2xs focus-within:border-[#0052CC] focus-within:ring-2 focus-within:ring-blue-500/15 transition-all"
+            className="flex items-center gap-2 p-1.5 bg-white border border-slate-200/90 rounded-2xl shadow-2xs focus-within:border-[#0052CC] focus-within:ring-2 focus-within:ring-blue-500/15 transition-all"
           >
             {categorySlug && <input type="hidden" name="category" value={categorySlug} />}
-            <div className="relative flex-1 flex items-center pl-3">
+            <div className="relative flex-1 flex items-center pl-3 min-w-0">
               <Search className="w-4 h-4 text-blue-600 shrink-0" />
               <input
                 type="text"
                 name="q"
                 defaultValue={query}
-                placeholder="Search by formulation, active ingredient, SKU, or consumable..."
-                className="w-full pl-2.5 pr-4 py-2.5 bg-transparent text-xs sm:text-sm text-[#091E3A] placeholder:text-slate-400 focus:outline-hidden font-medium"
+                placeholder="Search formulation, SKU, consumable..."
+                className="w-full pl-2.5 pr-2 py-2.5 bg-transparent text-xs sm:text-sm text-[#091E3A] placeholder:text-slate-400 focus:outline-none font-medium min-w-0"
               />
             </div>
-            <button
-              type="submit"
-              className="px-6 py-2.5 rounded-xl bg-[#0052CC] hover:bg-[#0043A8] text-white text-xs sm:text-sm font-bold shadow-xs active:scale-95 transition shrink-0 cursor-pointer"
-            >
-              Search
-            </button>
             {query && (
               <Link
                 href={categorySlug ? `/products?category=${categorySlug}` : '/products'}
-                className="px-3.5 py-2.5 rounded-xl border border-slate-200 text-slate-600 text-xs font-semibold hover:bg-slate-50 flex items-center gap-1 shrink-0 transition"
+                className="p-2 rounded-xl border border-slate-200 text-slate-500 hover:bg-slate-50 flex items-center shrink-0 transition"
+                title="Clear search"
+                aria-label="Clear search"
               >
-                <X className="w-3.5 h-3.5" />
-                <span>Clear</span>
+                <X className="w-4 h-4" />
               </Link>
             )}
+            <button
+              type="submit"
+              className="px-4 sm:px-6 py-2.5 rounded-xl bg-[#0052CC] hover:bg-[#0043A8] text-white text-xs sm:text-sm font-bold shadow-xs active:scale-95 transition shrink-0 cursor-pointer whitespace-nowrap"
+            >
+              <span className="hidden sm:inline">Search</span>
+              <Search className="w-4 h-4 sm:hidden" />
+            </button>
           </form>
 
           {/* Results Summary Strip */}
@@ -285,7 +287,7 @@ export default async function ProductsPage({ searchParams }) {
 
           {/* Pagination Controls */}
           {totalPages > 1 && (
-            <div className="flex justify-center gap-2 pt-6">
+            <div className="flex flex-wrap justify-center gap-2 pt-6">
               {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
                 <Link
                   key={p}

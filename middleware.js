@@ -2,15 +2,23 @@ import { NextResponse } from 'next/server';
 
 export function middleware(request) {
   const { pathname } = request.nextUrl;
+  const sessionCookie = request.cookies.get('alphamed_session');
 
-  // Protect /admin routes
+  // Protect /admin routes — require any session; role check happens in AdminLayout server component
   if (pathname.startsWith('/admin') || pathname.startsWith('/api/admin')) {
-    const sessionCookie = request.cookies.get('alphamed_session');
-
-    if (!sessionCookie) {
+    if (!sessionCookie?.value) {
       if (pathname.startsWith('/api/')) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
       }
+      const loginUrl = new URL('/login', request.url);
+      loginUrl.searchParams.set('redirect', pathname);
+      return NextResponse.redirect(loginUrl);
+    }
+  }
+
+  // Protect /dashboard — belt-and-suspenders alongside the server-side redirect in page.js
+  if (pathname.startsWith('/dashboard')) {
+    if (!sessionCookie?.value) {
       const loginUrl = new URL('/login', request.url);
       loginUrl.searchParams.set('redirect', pathname);
       return NextResponse.redirect(loginUrl);
@@ -32,15 +40,7 @@ export function middleware(request) {
 
 export const config = {
   matcher: [
-    '/admin/:path*',
-    '/api/admin/:path*',
-    /*
-     * Match all request paths except for the ones starting with:
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     * - public assets
-     */
-    '/((?!_next/static|_next/image|favicon.ico|assets/).*)',
+    // Only run on actual app routes — skip static files and Next.js internals
+    '/((?!_next/static|_next/image|favicon.ico|assets/|public/).*)',
   ],
 };

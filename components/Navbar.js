@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { getSession } from '@/lib/auth';
 import MobileNav from '@/components/MobileNav';
 import CartBadge from '@/components/CartBadge';
+import ActiveLink from '@/components/ActiveLink';
 import { Lock, PhoneCall, Mail, ShieldCheck, User } from 'lucide-react';
 
 export default async function Navbar() {
@@ -10,7 +11,7 @@ export default async function Navbar() {
   const user = session?.user;
 
   const navLinks = [
-    { name: 'Home', href: '/' },
+    { name: 'Home', href: '/', exactMatch: true },
     { name: 'Products', href: '/products' },
     { name: 'Services', href: '/services' },
     { name: 'Compliance', href: '/compliance' },
@@ -19,33 +20,35 @@ export default async function Navbar() {
   ];
 
   return (
-    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-xs">
+    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-sm relative">
       {/* Top Institutional Regulatory & Hotline Strip */}
-      <div className="bg-[#041E42] text-slate-300 text-[11px] py-1.5 px-4 sm:px-6 lg:px-8 border-b border-[#0A284D]">
-        <div className="max-w-full mx-auto flex flex-wrap justify-between items-center gap-2">
-          <div className="flex items-center gap-2">
-            <span className="relative flex h-1.5 w-1.5">
+      <div className="bg-[#041E42] text-slate-300 text-[11px] py-1.5 border-b border-[#0A284D]">
+        <div className="w-full max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap justify-between items-center gap-y-1 gap-x-3">
+          {/* Left: WHO-GMP badge — abbreviated on mobile */}
+          <div className="flex items-center gap-2 min-w-0">
+            <span className="relative flex h-1.5 w-1.5 shrink-0">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
               <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500" />
             </span>
-            <span className="font-semibold text-slate-200 tracking-wide flex items-center gap-1.5">
-              <ShieldCheck className="w-3.5 h-3.5 text-emerald-400 inline" />
-              WHO-GMP & ISO 13485:2016 Compliant B2B Institutional Supply
+            <span className="font-semibold text-slate-200 tracking-wide flex items-center gap-1.5 truncate">
+              <ShieldCheck className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+              <span className="hidden sm:inline">WHO-GMP &amp; ISO 13485:2016 Compliant B2B Institutional Supply</span>
+              <span className="sm:hidden">WHO-GMP &amp; ISO 13485:2016</span>
             </span>
           </div>
 
-          <div className="flex items-center gap-4 text-slate-300">
+          {/* Right: Contact info */}
+          <div className="flex items-center gap-3 text-slate-300 shrink-0">
             <div className="flex items-center gap-1.5">
-              <PhoneCall className="w-3 h-3 text-sky-400" />
-              <span>Desk:</span>
-              <strong className="text-white font-semibold">+91 98765 43210</strong>
+              <PhoneCall className="w-3 h-3 text-sky-400 shrink-0" />
+              <strong className="text-white font-semibold whitespace-nowrap">+91 98765 43210</strong>
             </div>
             <span className="text-slate-600 hidden sm:inline">|</span>
-            <div className="hidden sm:flex items-center gap-1.5">
-              <Mail className="w-3 h-3 text-sky-400" />
+            <div className="hidden sm:flex items-center gap-1.5 min-w-0">
+              <Mail className="w-3 h-3 text-sky-400 shrink-0" />
               <a
                 href="mailto:procurement@alphamedcure.com"
-                className="text-slate-300 hover:text-white transition-colors"
+                className="text-slate-300 hover:text-white transition-colors truncate"
               >
                 procurement@alphamedcure.com
               </a>
@@ -54,44 +57,46 @@ export default async function Navbar() {
         </div>
       </div>
 
-      {/* Main Single-Line Corporate Navigation Bar */}
-      <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-18 gap-4 flex-wrap overflow-x-hidden">
+      {/* Main Navigation Bar */}
+      <div className="w-full max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-18 gap-4">
           {/* Logo */}
           <Link
             href="/"
-            className="flex items-center gap-2 focus:outline-hidden focus:ring-2 focus:ring-sky-500 rounded-xl transition-transform hover:scale-[1.01] shrink-0"
+            className="flex items-center gap-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 rounded-xl transition-transform hover:scale-[1.01] shrink-0"
             title="AlphaMed Cure"
           >
-            <div className="relative w-24 h-12 md:w-32 md:h-16">
+            <div className="relative w-28 h-12 md:w-36 md:h-14">
               <Image
                 src="/assets/alphamed_cure_logo.png"
                 alt="AlphaMed Cure - Institutional Healthcare Procurement"
                 fill
-                sizes="(max-width: 640px) 176px, 208px"
-                className="object-contain object-center"
+                sizes="(max-width: 768px) 112px, 144px"
+                className="object-contain object-left"
                 priority
               />
             </div>
           </Link>
 
-          {/* Desktop Single-Line Navigation Options */}
+          {/* Desktop Navigation Links */}
           <nav
-            className="hidden lg:flex items-center gap-1 xl:gap-2 text-sm font-semibold text-slate-700 whitespace-nowrap"
+            className="hidden lg:flex items-center gap-0.5 xl:gap-1 text-sm font-semibold text-slate-700 whitespace-nowrap flex-1 justify-center"
             aria-label="Main Navigation"
           >
             {navLinks.map((item) => (
-              <Link
+              <ActiveLink
                 key={item.href}
                 href={item.href}
-                className="px-3.5 py-2 rounded-xl hover:text-sky-700 hover:bg-slate-100/80 transition-all active:scale-95"
+                exactMatch={item.exactMatch}
+                className="px-3.5 py-2 rounded-xl hover:text-sky-700 hover:bg-slate-100/80 transition-all active:scale-95 text-slate-700"
+                activeClassName="px-3.5 py-2 rounded-xl text-[#0052CC] bg-blue-50/80 font-bold active:scale-95"
               >
                 {item.name}
-              </Link>
+              </ActiveLink>
             ))}
           </nav>
 
-          {/* Desktop Right Actions Group (Single Line) */}
+          {/* Desktop Right Actions */}
           <div className="hidden md:flex items-center gap-3 shrink-0 whitespace-nowrap">
             {user ? (
               <div className="flex items-center gap-2.5">
@@ -135,13 +140,14 @@ export default async function Navbar() {
           </div>
 
           {/* Mobile Actions & Menu Toggle */}
-          <div className="flex items-center gap-2 lg:hidden">
+          <div className="flex items-center gap-1.5 lg:hidden">
             <Link
               href="/inquiry"
-              className="p-2 text-slate-700 hover:text-sky-600 text-xs font-bold transition"
+              className="p-2 text-slate-700 hover:text-sky-600 text-xs font-bold transition rounded-lg hover:bg-slate-100"
               title="Inquiry Cart"
+              aria-label="Inquiry Cart"
             >
-              📋 Cart
+              📋
             </Link>
             <MobileNav user={user} />
           </div>
@@ -150,3 +156,4 @@ export default async function Navbar() {
     </header>
   );
 }
+
