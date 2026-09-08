@@ -175,3 +175,8 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   outline: 2px solid #0052CC;
   outline-offset: 2px;
 }
+
+/* Override fixed max-width for responsive design */
+@layer utilities {
+  .max-w-7xl { max-width: 100% !important; }
+}

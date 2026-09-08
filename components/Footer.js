@@ -14,20 +14,20 @@ import {
 export default function Footer() {
   return (
     <footer className="bg-[#041E42] text-slate-300 pt-16 pb-12 border-t border-[#0A284D]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
         {/* Main Footer Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-[#0A284D]">
           {/* Col 1 & 2: Brand Identity & Accreditations */}
           <div className="space-y-5 lg:col-span-2">
             {/* Logo on clean white plate for maximum contrast & crispness */}
             <div className="bg-white p-2.5 rounded-2xl inline-block shadow-md">
-              <div className="relative w-48 h-12">
+              <div className="relative w-36 h-9">
                 <Image
                   src="/assets/alphamed_cure_logo.png"
                   alt="Alphamed Cure Logo"
                   fill
                   sizes="192px"
-                  className="object-contain object-left"
+                  className="object-contain object-center"
                 />
               </div>
             </div>

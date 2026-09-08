@@ -444,7 +444,7 @@ export default async function HomePage() {
 
       {/* 8. INSTITUTIONAL METRICS STRIP */}
       <section className="bg-[#041E42] text-white py-16 sm:py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+        <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
           <div className="max-w-2xl">
             <span className="text-xs font-bold uppercase tracking-wider text-blue-400">
               Supply Scale &amp; Performance

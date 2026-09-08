@@ -94,7 +94,7 @@ export default function MobileNav({ user }) {
         <div className="p-6 overflow-y-auto space-y-6">
           {/* Header */}
           <div className="flex items-center justify-between pb-4 border-b border-slate-100">
-            <div className="relative w-36 h-10">
+            <div className="relative w-28 h-8">
               <Image
                 src="/assets/alphamed_cure_logo.png"
                 alt="Alphamed Cure"

@@ -22,7 +22,7 @@ export default async function Navbar() {
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-xs">
       {/* Top Institutional Regulatory & Hotline Strip */}
       <div className="bg-[#041E42] text-slate-300 text-[11px] py-1.5 px-4 sm:px-6 lg:px-8 border-b border-[#0A284D]">
-        <div className="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
+        <div className="max-w-full mx-auto flex flex-wrap justify-between items-center gap-2">
           <div className="flex items-center gap-2">
             <span className="relative flex h-1.5 w-1.5">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
@@ -55,21 +55,21 @@ export default async function Navbar() {
       </div>
 
       {/* Main Single-Line Corporate Navigation Bar */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-18 gap-4 flex-nowrap">
+      <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-18 gap-4 flex-wrap overflow-x-hidden">
           {/* Logo */}
           <Link
             href="/"
             className="flex items-center gap-2 focus:outline-hidden focus:ring-2 focus:ring-sky-500 rounded-xl transition-transform hover:scale-[1.01] shrink-0"
             title="AlphaMed Cure"
           >
-            <div className="relative w-44 sm:w-52 h-11 sm:h-12">
+            <div className="relative w-24 h-12 md:w-32 md:h-16">
               <Image
                 src="/assets/alphamed_cure_logo.png"
                 alt="AlphaMed Cure - Institutional Healthcare Procurement"
                 fill
                 sizes="(max-width: 640px) 176px, 208px"
-                className="object-contain object-left"
+                className="object-contain object-center"
                 priority
               />
             </div>
