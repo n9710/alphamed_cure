@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import ProductCard from '@/components/ProductCard';
+import ProductSearch from '@/components/ProductSearch';
 import { getProducts, getCategories } from '@/lib/products';
 import { getSession } from '@/lib/auth';
 import {
@@ -198,41 +199,8 @@ export default async function ProductsPage({ searchParams }) {
 
         {/* Product Grid & Search Area */}
         <div className="md:col-span-3 space-y-6">
-          {/* Search Bar Form */}
-          <form
-            method="GET"
-            action="/products"
-            className="flex items-center gap-2 p-1.5 bg-white border border-slate-200/90 rounded-2xl shadow-2xs focus-within:border-[#0052CC] focus-within:ring-2 focus-within:ring-blue-500/15 transition-all"
-          >
-            {categorySlug && <input type="hidden" name="category" value={categorySlug} />}
-            <div className="relative flex-1 flex items-center pl-3 min-w-0">
-              <Search className="w-4 h-4 text-blue-600 shrink-0" />
-              <input
-                type="text"
-                name="q"
-                defaultValue={query}
-                placeholder="Search formulation, SKU, consumable..."
-                className="w-full pl-2.5 pr-2 py-2.5 bg-transparent text-xs sm:text-sm text-[#091E3A] placeholder:text-slate-400 focus:outline-none font-medium min-w-0"
-              />
-            </div>
-            {query && (
-              <Link
-                href={categorySlug ? `/products?category=${categorySlug}` : '/products'}
-                className="p-2 rounded-xl border border-slate-200 text-slate-500 hover:bg-slate-50 flex items-center shrink-0 transition"
-                title="Clear search"
-                aria-label="Clear search"
-              >
-                <X className="w-4 h-4" />
-              </Link>
-            )}
-            <button
-              type="submit"
-              className="px-4 sm:px-6 py-2.5 rounded-xl bg-[#0052CC] hover:bg-[#0043A8] text-white text-xs sm:text-sm font-bold shadow-xs active:scale-95 transition shrink-0 cursor-pointer whitespace-nowrap"
-            >
-              <span className="hidden sm:inline">Search</span>
-              <Search className="w-4 h-4 sm:hidden" />
-            </button>
-          </form>
+          {/* Search Bar — client component with instant spinner */}
+          <ProductSearch defaultValue={query} categorySlug={categorySlug} />
 
           {/* Results Summary Strip */}
           <div className="flex flex-wrap justify-between items-center text-xs text-slate-500 px-1 gap-2">

@@ -37,7 +37,7 @@ export default async function DashboardPage() {
         items: {
           include: {
             product: {
-              select: { name: true, sku: true, dosageForm: true, strength: true },
+              select: { name: true, sku: true },
             },
           },
         },

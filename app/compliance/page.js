@@ -1,60 +1,48 @@
 import Link from 'next/link';
 import {
-  Award,
   ShieldCheck,
-  ThermometerSnowflake,
-  SearchCheck,
   FileCheck2,
   ArrowRight,
   CheckCircle2,
+  Info,
 } from 'lucide-react';
 
 export const metadata = {
-  title: 'Quality & Regulatory Compliance | Alphamed Cure',
+  title: 'Quality & Standards | Alphamed Cure',
   description:
-    'Overview of Alphamed Cure quality assurance protocols, WHO-GMP standards, ISO 13485:2016 certifications, and cold-chain distribution integrity.',
+    'Alphamed Cure is committed to quality in healthcare product management, sourcing, and customer service.',
 };
 
 export default function CompliancePage() {
-  const compliancePillars = [
+  const qualityPillars = [
     {
-      title: 'WHO-GMP Certified Formulations',
-      icon: Award,
-      desc: 'All pharmaceutical formulations and injectables distributed by Alphamed Cure are manufactured in cGMP and WHO-GMP compliant facilities. Stringent validation guidelines govern air filtration (HVAC ISO Class 5–8), water purification (WFI grade), and sterile aseptic filling.',
-      checks: [
-        'Batch-to-batch chemical assay and chromatographic verification',
-        'Endotoxin, sterility, and microbiological assays',
-        'Accelerated and real-time ICH stability validation',
-      ],
-    },
-    {
-      title: 'ISO 13485:2016 Medical Devices',
+      title: 'Product Quality Standards',
       icon: ShieldCheck,
-      desc: 'Our medical equipment, diagnostic reagents, and operative surgical consumables adhere strictly to ISO 13485:2016 standards for comprehensive medical device quality management systems, ensuring clinical safety and performance consistency.',
+      desc: 'We coordinate with suppliers to ensure the healthcare products in our catalog meet appropriate quality standards. Product information is maintained accurately and updated regularly.',
       checks: [
-        'Biocompatibility testing (ISO 10993 compliant)',
-        'Gamma & EO gas sterile barrier validation (ISO 11607)',
-        'Calibrated bio-medical equipment performance testing',
+        'Accurate product information and documentation',
+        'Supplier coordination for quality assurance',
+        'Regular catalog review and verification',
       ],
     },
     {
-      title: 'Cold-Chain Distribution Integrity',
-      icon: ThermometerSnowflake,
-      desc: 'Biologics, vaccines, and sensitive parenteral drugs are managed under continuous temperature parameters (2°C to 8°C or -20°C frozen storage). Active phase-change material (PCM) shippers and wireless data loggers accompany all cold-chain shipments.',
+      title: 'Service Standards',
+      icon: FileCheck2,
+      desc: 'Our service delivery is built around professional standards for sales management, customer communication, and order handling. We maintain consistent processes across all client interactions.',
       checks: [
-        'Continuous calibrated digital temperature loggers enclosed',
-        'Pre-qualified insulated shippers validated up to 96 hours',
-        'Immediate audit report handoff upon hospital delivery',
+        'Professional communication protocols',
+        'Structured sales and service processes',
+        'Clear escalation and resolution paths',
       ],
     },
     {
-      title: 'Pharmacovigilance & Quality Audits',
-      icon: SearchCheck,
-      desc: 'Our regulatory affairs team monitors adverse drug reactions and batch performance in accordance with national and international pharmacovigilance standards. Rapid recall protocols ensure immediate quarantine capabilities if required.',
+      title: 'Data & Privacy',
+      icon: Info,
+      desc: 'We handle client and business information responsibly, in accordance with applicable data protection standards.',
       checks: [
-        'Dedicated 24-hour adverse incident reporting desk',
-        'Comprehensive serial and lot-level recall protocols',
-        'Annual manufacturing facility audits and risk assessments',
+        'Secure handling of client information',
+        'Responsible data practices',
+        'Transparent privacy policy',
       ],
     },
   ];
@@ -65,19 +53,19 @@ export default function CompliancePage() {
       <div className="max-w-3xl space-y-4">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 text-xs font-bold uppercase tracking-wide border border-emerald-200">
           <ShieldCheck className="w-3.5 h-3.5" />
-          <span>Regulatory Assurance</span>
+          <span>Quality & Standards</span>
         </div>
         <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#041E42] tracking-tight">
-          Quality, Safety &amp; Regulatory Standards
+          Our Commitment to Quality
         </h1>
         <p className="text-base sm:text-lg text-slate-600 leading-relaxed font-normal">
-          At Alphamed Cure, quality assurance is integrated into every phase of our supply chain — from manufacturer facility audits and batch analytical testing to temperature-controlled transit and hospital intake verification.
+          Alphamed Cure is committed to maintaining high standards across our services — from the quality of healthcare products we help manage, to the professionalism of our customer interactions.
         </p>
       </div>
 
-      {/* Compliance Pillars */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {compliancePillars.map((pillar, idx) => {
+      {/* Quality Pillars */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {qualityPillars.map((pillar, idx) => {
           const Icon = pillar.icon;
           return (
             <div
@@ -108,25 +96,22 @@ export default function CompliancePage() {
         })}
       </div>
 
-      {/* Audit Document Request Strip */}
+      {/* CTA Strip */}
       <div className="bg-gradient-to-r from-blue-50 via-white to-emerald-50/50 rounded-3xl border border-blue-200/70 p-8 sm:p-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 shadow-xs">
         <div className="space-y-2 max-w-xl">
-          <div className="inline-flex items-center gap-2 text-xs font-bold text-[#0052CC] uppercase tracking-wider">
-            <FileCheck2 className="w-4 h-4" />
-            <span>Audit Dossier Desk</span>
-          </div>
           <h3 className="text-xl font-bold text-[#041E42]">
-            Require Audit Dossiers or Certificates of Analysis (COA)?
+            Have questions about how we work?
           </h3>
           <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
-            Our regulatory affairs team provides authenticated batch test releases and manufacturer clearance files for hospital pharmacy audit committees upon request.
+            We&apos;re happy to discuss our processes, service standards, and how we can support your healthcare business.
           </p>
         </div>
         <Link
-          href="/contact?subject=Audit%20Dossier%20Request"
-          className="shrink-0 px-6 py-3.5 rounded-xl bg-[#0052CC] hover:bg-[#0043A8] text-white text-xs sm:text-sm font-bold active:scale-95 transition shadow-sm"
+          href="/consultation"
+          className="shrink-0 px-6 py-3.5 rounded-xl bg-[#0052CC] hover:bg-[#0043A8] text-white text-xs sm:text-sm font-bold active:scale-95 transition shadow-sm inline-flex items-center gap-2"
         >
-          Request Documentation
+          <span>Request a Consultation</span>
+          <ArrowRight className="w-4 h-4" />
         </Link>
       </div>
     </div>

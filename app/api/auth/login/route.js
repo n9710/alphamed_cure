@@ -81,8 +81,18 @@ export async function POST(request) {
     });
   } catch (error) {
     console.error('Login API error:', error);
+    // Detect DB connection errors (Supabase waking up / paused instance)
+    const isDbError =
+      error?.message?.includes('connect') ||
+      error?.message?.includes('ECONNREFUSED') ||
+      error?.message?.includes('P1001') ||
+      error?.code === 'P1001';
     return NextResponse.json(
-      { error: 'Internal server error during authentication' },
+      {
+        error: isDbError
+          ? 'Database is temporarily unavailable. Please wait a moment and try again.'
+          : 'Internal server error during authentication',
+      },
       { status: 500 }
     );
   }

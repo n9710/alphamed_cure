@@ -4,7 +4,7 @@ import { getSession } from '@/lib/auth';
 import MobileNav from '@/components/MobileNav';
 import CartBadge from '@/components/CartBadge';
 import ActiveLink from '@/components/ActiveLink';
-import { Lock, PhoneCall, Mail, ShieldCheck, User } from 'lucide-react';
+import { Lock, PhoneCall, Mail, User } from 'lucide-react';
 
 export default async function Navbar() {
   const session = await getSession();
@@ -21,19 +21,18 @@ export default async function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-sm relative">
-      {/* Top Institutional Regulatory & Hotline Strip */}
+      {/* Top Brand Strip */}
       <div className="bg-[#041E42] text-slate-300 text-[11px] py-1.5 border-b border-[#0A284D]">
         <div className="w-full max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap justify-between items-center gap-y-1 gap-x-3">
-          {/* Left: WHO-GMP badge — abbreviated on mobile */}
+          {/* Left: Brand positioning tagline */}
           <div className="flex items-center gap-2 min-w-0">
             <span className="relative flex h-1.5 w-1.5 shrink-0">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
               <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500" />
             </span>
-            <span className="font-semibold text-slate-200 tracking-wide flex items-center gap-1.5 truncate">
-              <ShieldCheck className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-              <span className="hidden sm:inline">WHO-GMP &amp; ISO 13485:2016 Compliant B2B Institutional Supply</span>
-              <span className="sm:hidden">WHO-GMP &amp; ISO 13485:2016</span>
+            <span className="font-semibold text-slate-200 tracking-wide truncate">
+              <span className="hidden sm:inline">Sales · Service · Support · Healthcare Solutions</span>
+              <span className="sm:hidden">Sales · Service · Support</span>
             </span>
           </div>
 
@@ -41,16 +40,18 @@ export default async function Navbar() {
           <div className="flex items-center gap-3 text-slate-300 shrink-0">
             <div className="flex items-center gap-1.5">
               <PhoneCall className="w-3 h-3 text-sky-400 shrink-0" />
-              <strong className="text-white font-semibold whitespace-nowrap">+91 98765 43210</strong>
+              <a href="/contact" className="text-white font-semibold whitespace-nowrap hover:text-sky-300 transition-colors">
+                Contact Us
+              </a>
             </div>
             <span className="text-slate-600 hidden sm:inline">|</span>
             <div className="hidden sm:flex items-center gap-1.5 min-w-0">
               <Mail className="w-3 h-3 text-sky-400 shrink-0" />
               <a
-                href="mailto:procurement@alphamedcure.com"
+                href="mailto:info@alphamedcure.com"
                 className="text-slate-300 hover:text-white transition-colors truncate"
               >
-                procurement@alphamedcure.com
+                info@alphamedcure.com
               </a>
             </div>
           </div>
@@ -69,7 +70,7 @@ export default async function Navbar() {
             <div className="relative w-28 h-12 md:w-36 md:h-14">
               <Image
                 src="/assets/alphamed_cure_logo.png"
-                alt="AlphaMed Cure - Institutional Healthcare Procurement"
+                alt="AlphaMed Cure - Sales, Service, Support, Healthcare Solutions"
                 fill
                 sizes="(max-width: 768px) 112px, 144px"
                 className="object-contain object-left"
@@ -127,10 +128,10 @@ export default async function Navbar() {
                 </Link>
 
                 <Link
-                  href="/register"
-                  className="inline-flex items-center justify-center text-xs font-bold px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white transition shadow-sm hover:shadow-md"
+                  href="/consultation"
+                  className="inline-flex items-center justify-center text-xs font-bold px-4 py-2.5 rounded-xl bg-[#0052CC] hover:bg-[#0043A8] text-white transition shadow-sm hover:shadow-md"
                 >
-                  Register Partner
+                  Request Consultation
                 </Link>
               </div>
             )}

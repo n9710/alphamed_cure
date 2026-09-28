@@ -10,6 +10,8 @@ import {
   Info,
   Package,
   PhoneCall,
+  Layers,
+  CalendarCheck,
   ChevronRight,
 } from 'lucide-react';
 
@@ -17,12 +19,14 @@ export default function MobileNav({ user }) {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
 
-  // Clean navigation options ONLY: Home, About, Catalog, Contact Us
+  // Navigation items — mirrors desktop nav
   const navItems = [
     { name: 'Home', href: '/', icon: Home, exact: true },
     { name: 'About', href: '/about', icon: Info },
-    { name: 'Catalog', href: '/products', icon: Package },
-    { name: 'Contact Us', href: '/contact', icon: PhoneCall },
+    { name: 'Services', href: '/services', icon: Layers },
+    { name: 'Products', href: '/products', icon: Package },
+    { name: 'Contact', href: '/contact', icon: PhoneCall },
+    { name: 'Request Consultation', href: '/consultation', icon: CalendarCheck },
   ];
 
   // Close menu on route changes

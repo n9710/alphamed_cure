@@ -3,24 +3,21 @@ import Image from 'next/image';
 import ProductCard from '@/components/ProductCard';
 import { getProducts, getCategories } from '@/lib/products';
 import { getSession } from '@/lib/auth';
-import { SERVICES } from '@/data/services';
 import { HeroQuickSearch, ProcurementFaq } from '@/components/HomeInteractive';
 import {
-  ShieldCheck,
-  Award,
-  ThermometerSnowflake,
-  FileCheck2,
-  Building2,
   ArrowRight,
-  CheckCircle2,
-  PhoneCall,
-  Pill,
-  Activity,
+  Building2,
   Layers,
+  Activity,
+  PhoneCall,
   Sparkles,
-  Lock,
+  ShieldCheck,
+  TrendingUp,
+  Package,
+  Headphones,
+  CheckCircle2,
+  Users,
 } from 'lucide-react';
-
 export default async function HomePage() {
   const session = await getSession();
   const user = session?.user;
@@ -39,40 +36,6 @@ export default async function HomePage() {
     console.warn('Database query fallback on homepage:', err.message);
   }
 
-  const trustCredentials = [
-    {
-      title: 'WHO-GMP Certified',
-      subtitle: 'Partner Manufacturing',
-      icon: Award,
-    },
-    {
-      title: 'ISO 13485:2016',
-      subtitle: 'Medical Device Standards',
-      icon: ShieldCheck,
-    },
-    {
-      title: 'Validated Cold-Chain',
-      subtitle: '2°C to 8°C Continuous Logging',
-      icon: ThermometerSnowflake,
-    },
-    {
-      title: '100% Traceability',
-      subtitle: 'Lot-Specific COA Dossiers',
-      icon: FileCheck2,
-    },
-    {
-      title: 'Direct Institutional',
-      subtitle: 'Hospital Supply Allocations',
-      icon: Building2,
-    },
-  ];
-
-  const statMetrics = [
-    { value: '500+', label: 'Certified Formulations & Devices' },
-    { value: '24–48h', label: 'Emergency Clinical Dispatch' },
-    { value: '100%', label: 'Batch Analytical Traceability' },
-    { value: '50+', label: 'Healthcare Network Partners' },
-  ];
 
   return (
     <div className="space-y-12 sm:space-y-20 pb-16 sm:pb-20">
@@ -86,48 +49,49 @@ export default async function HomePage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
             {/* Left Column: Authoritative Editorial Copy */}
             <div className="lg:col-span-7 space-y-6">
-              {/* Trust Badge with Live Green Indicator */}
+              {/* Business positioning badge */}
               <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-white border border-slate-200/90 shadow-2xs">
                 <span className="relative flex h-2.5 w-2.5">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
                   <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500" />
                 </span>
                 <span className="text-xs font-bold text-[#041E42] tracking-wide">
-                  WHO-GMP & ISO 13485:2016 Certified Procurement Network
+                  Sales · Service · Support · Healthcare Solutions
                 </span>
               </div>
 
               {/* Large, Confident Headline */}
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#041E42] tracking-tight leading-[1.1]">
-                Institutional Healthcare &amp;{' '}
-                <span className="text-[#0052CC]">Pharmaceutical</span> Supply.
+                Healthcare{' '}
+                <span className="text-[#0052CC]">Sales, Service</span>{' '}
+                &amp; Support.
               </h1>
 
               {/* Supporting Copy (18-20px) */}
               <p className="text-base sm:text-lg text-slate-600 leading-relaxed max-w-2xl font-normal">
-                Alphamed Cure coordinates precision procurement and certified distribution of hospital-grade pharmaceuticals, sterile surgical consumables, and advanced clinical equipment for licensed healthcare networks.
+                Alphamed Cure is a healthcare business partner providing Sales Management, Product Management, and Customer Support to businesses in the healthcare products space.
               </p>
 
               {/* CTAs */}
               <div className="flex flex-wrap items-center gap-3.5 pt-2">
                 <Link
-                  href="/products"
+                  href="/consultation"
                   className="inline-flex items-center gap-2 px-7 py-4 rounded-xl bg-[#0052CC] text-white font-bold text-sm hover:bg-[#0043A8] shadow-md hover:shadow-lg hover:shadow-blue-600/25 active:scale-95 transition-all"
                 >
-                  <span>Explore Products Catalog</span>
+                  <span>Request a Consultation</span>
                   <ArrowRight className="w-4 h-4" />
                 </Link>
                 <Link
-                  href="/contact"
+                  href="/products"
                   className="inline-flex items-center gap-2 px-6 py-4 rounded-xl bg-white border border-slate-200 text-[#041E42] font-bold text-sm hover:bg-slate-50 hover:border-slate-300 active:scale-95 transition-all shadow-2xs"
                 >
-                  <span>Inquiry Desk</span>
+                  <span>Explore Products</span>
                 </Link>
                 <Link
-                  href="/register"
+                  href="/services"
                   className="px-3 py-4 text-xs font-bold text-[#0052CC] hover:text-[#0043A8] underline underline-offset-4 transition"
                 >
-                  Apply for Institutional Account →
+                  Our Services →
                 </Link>
               </div>
 
@@ -152,98 +116,33 @@ export default async function HomePage() {
                   <div className="absolute inset-0 bg-gradient-to-t from-[#041E42]/20 via-transparent to-transparent pointer-events-none" />
                 </div>
 
-                {/* Floating Badge 1 (Top Right): Cold-Chain Telemetry — hidden on smallest screens */}
-                <div className="hidden sm:flex absolute -top-4 -right-2 sm:-right-4 lg:-right-6 bg-white/95 backdrop-blur-md p-3 rounded-2xl border border-slate-200 shadow-xl items-center gap-3 animate-float max-w-[200px]">
-                  <div className="w-9 h-9 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600 shrink-0">
-                    <ThermometerSnowflake className="w-4.5 h-4.5" />
-                  </div>
-                  <div className="text-left">
-                    <div className="flex items-center gap-1">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                      <span className="text-[10px] font-bold text-[#041E42] uppercase tracking-wider">
-                        Validated Cold-Chain
-                      </span>
-                    </div>
-                    <p className="text-xs font-extrabold text-[#0052CC] font-mono mt-0.5">
-                      2°C – 8°C (4.2°C)
-                    </p>
-                  </div>
-                </div>
-
-                {/* Floating Badge 2 (Bottom Left): Batch Traceability — hidden on smallest screens */}
-                <div
-                  className="hidden sm:flex absolute -bottom-4 -left-2 sm:-left-4 lg:-left-6 bg-white/95 backdrop-blur-md p-3 rounded-2xl border border-slate-200 shadow-xl items-center gap-3 animate-float max-w-[200px]"
-                  style={{ animationDelay: '1.5s' }}
-                >
-                  <div className="w-9 h-9 rounded-xl bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-600 shrink-0">
-                    <FileCheck2 className="w-4.5 h-4.5" />
-                  </div>
-                  <div className="text-left">
-                    <div className="flex items-center gap-1 text-emerald-700 font-bold text-[10px] uppercase tracking-wider">
-                      <CheckCircle2 className="w-3 h-3 inline" />
-                      <span>COA Lot Assayed</span>
-                    </div>
-                    <p className="text-xs font-bold text-[#041E42] mt-0.5">
-                      100% Batch Traceability
-                    </p>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 2. TRUST & CREDENTIAL STRIP — Refined Institutional Verification */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-white rounded-3xl border border-slate-200/90 shadow-sm p-6 sm:p-8">
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 sm:gap-8 divide-y lg:divide-y-0 lg:divide-x divide-slate-100">
-            {trustCredentials.map((item, idx) => {
-              const Icon = item.icon;
-              return (
-                <div
-                  key={idx}
-                  className={`flex items-start gap-3.5 ${idx !== 0 ? 'lg:pl-6' : ''} ${idx > 1 ? 'pt-4 lg:pt-0' : ''}`}
-                >
-                  <div className="w-10 h-10 rounded-xl bg-blue-50/80 border border-blue-100/80 flex items-center justify-center text-[#0052CC] shrink-0 mt-0.5">
-                    <Icon className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <h3 className="text-sm font-bold text-[#041E42] flex items-center gap-1.5">
-                      <span>{item.title}</span>
-                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 inline" />
-                    </h3>
-                    <p className="text-xs text-slate-500 mt-0.5 font-medium leading-snug">
-                      {item.subtitle}
-                    </p>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
 
-      {/* 3. ASYMMETRIC ABOUT SECTION — Editorial Layout with Supply Commitments */}
+      {/* 3. ASYMMETRIC ABOUT SECTION */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="bg-white rounded-3xl border border-slate-200 p-8 sm:p-12 lg:p-14 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center shadow-xs card-hover">
           <div className="lg:col-span-7 space-y-4">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-[#0052CC] text-xs font-bold tracking-wide uppercase">
               <Sparkles className="w-3.5 h-3.5" />
-              <span>Dedicated Supply Partner</span>
+              <span>Your Healthcare Partner</span>
             </div>
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#041E42] tracking-tight">
-              A Resilient Procurement Bridge for Clinical Healthcare
+              Operational Support for Healthcare Businesses
             </h2>
             <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-normal">
-              Alphamed Cure links certified pharmaceutical manufacturers, medical device fabricators, and specialized clinical packaging directly to licensed hospitals, diagnostic centers, and compounding pharmacies. We eliminate supply volatility with batch quarantine protocols, rigorous temperature auditing, and dedicated institutional reserves.
+              Alphamed Cure helps healthcare businesses grow by providing the operational backbone they need. From full-cycle sales management and product coordination to dedicated customer support, we embed ourselves into your processes so you can focus on scale.
             </p>
             <div className="pt-2">
               <Link
                 href="/about"
                 className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-[#041E42] text-white text-xs sm:text-sm font-bold hover:bg-[#0A2540] active:scale-95 transition-all shadow-xs"
               >
-                <span>Read Institutional Profile</span>
+                <span>Read Our Profile</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
@@ -251,43 +150,43 @@ export default async function HomePage() {
 
           <div className="lg:col-span-5 bg-gradient-to-br from-slate-50 to-blue-50/40 border border-slate-200/80 rounded-2xl p-7 space-y-4">
             <h3 className="text-xs font-bold uppercase tracking-wider text-[#041E42] flex items-center gap-2">
-              <ShieldCheck className="w-4 h-4 text-emerald-600" />
-              <span>Strict Operational Commitments</span>
+              <ShieldCheck className="w-4 h-4 text-[#0052CC]" />
+              <span>How We Support You</span>
             </h3>
             <ul className="space-y-3 text-xs sm:text-sm text-slate-600">
               <li className="flex items-start gap-2.5">
-                <span className="text-emerald-600 font-bold shrink-0 mt-0.5">✓</span>
-                <span>Direct procurement from WHO-GMP inspected manufacturing plants</span>
+                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                <span>Dedicated sales and lead engagement strategies</span>
               </li>
               <li className="flex items-start gap-2.5">
-                <span className="text-emerald-600 font-bold shrink-0 mt-0.5">✓</span>
-                <span>Calibrated digital data logging on all cold-chain biological shipments</span>
+                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                <span>Product portfolio organization and sourcing coordination</span>
               </li>
               <li className="flex items-start gap-2.5">
-                <span className="text-emerald-600 font-bold shrink-0 mt-0.5">✓</span>
-                <span>Lot-specific Certificate of Analysis (COA) included with all batches</span>
+                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                <span>Professional inbound and outbound customer communication</span>
               </li>
               <li className="flex items-start gap-2.5">
-                <span className="text-emerald-600 font-bold shrink-0 mt-0.5">✓</span>
-                <span>Emergency 24–48 hour prioritization for acute hospital shortages</span>
+                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                <span>Scalable business process and administrative support</span>
               </li>
             </ul>
           </div>
         </div>
       </section>
 
-      {/* 4. SERVICES CAPABILITIES SECTION — Professional Vector Grid */}
+      {/* 4. SERVICES CAPABILITIES SECTION */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
           <div>
             <span className="text-xs font-bold uppercase tracking-wider text-[#0052CC]">
-              Capabilities &amp; Logistics
+              Core Offerings
             </span>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-[#041E42] tracking-tight mt-1">
-              B2B Institutional Supply Services
+              Business Support Services
             </h2>
             <p className="text-xs sm:text-sm text-slate-500 mt-1">
-              Structured operational programs engineered for hospital purchasing directors and clinical buyers.
+              Structured operational programs engineered for healthcare businesses.
             </p>
           </div>
           <Link
@@ -300,9 +199,28 @@ export default async function HomePage() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {SERVICES.slice(0, 3).map((service, idx) => {
-            const icons = [Building2, ThermometerSnowflake, Layers];
-            const Icon = icons[idx] || Activity;
+          {/* We map specific representative services instead of just slicing */}
+          {[
+            {
+              id: 'sales-management',
+              title: 'Sales Management',
+              shortDesc: 'End-to-end sales coordination for healthcare businesses — from lead engagement to order closure.',
+              icon: TrendingUp
+            },
+            {
+              id: 'product-management',
+              title: 'Product Management',
+              shortDesc: 'Organized management of product portfolios — from listing and documentation to availability tracking.',
+              icon: Package
+            },
+            {
+              id: 'customer-communication',
+              title: 'Calling & Customer Communication',
+              shortDesc: 'Professional outbound calling and inbound communication management for healthcare businesses.',
+              icon: Headphones
+            }
+          ].map((service) => {
+            const Icon = service.icon;
             return (
               <div
                 key={service.id}
@@ -323,7 +241,7 @@ export default async function HomePage() {
                   href="/services"
                   className="text-xs font-bold text-[#0052CC] hover:text-[#0043A8] inline-flex items-center gap-1 group-hover:translate-x-1 transition-transform pt-3 border-t border-slate-100"
                 >
-                  <span>View Specifications</span>
+                  <span>View Details</span>
                   <span>→</span>
                 </Link>
               </div>
@@ -332,33 +250,33 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* 5. INSTITUTIONAL CONTRACT PRICING POLICY STRIP */}
+      {/* 5. CONSULTATION STRIP */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="bg-gradient-to-r from-blue-50 via-white to-emerald-50/40 border border-blue-200/70 rounded-3xl p-6 sm:p-9 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-xs">
           <div className="space-y-2 max-w-2xl">
             <div className="inline-flex items-center gap-2 text-xs font-bold text-[#0052CC] uppercase tracking-wider">
-              <Lock className="w-3.5 h-3.5 text-blue-600" />
-              <span>B2B Healthcare Compliance &amp; Tiered Pricing</span>
+              <Users className="w-3.5 h-3.5 text-blue-600" />
+              <span>Let&apos;s Build Together</span>
             </div>
             <h3 className="text-xl font-bold text-[#041E42]">
-              Institutional Contract Pricing &amp; Volume Schedules
+              Ready to structure your business support?
             </h3>
             <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-              In accordance with national pharmaceutical regulations, wholesale contract rates and bulk tier discounts are reserved for verified healthcare facilities, hospitals, and licensed dispensing pharmacies.
+              Whether you need sales management, product coordination, or comprehensive customer support, our team is ready to discuss how we can help your healthcare business scale efficiently.
             </p>
           </div>
           <div className="shrink-0 flex items-center gap-3">
             <Link
-              href="/register"
+              href="/consultation"
               className="px-5 py-3 rounded-xl bg-[#0052CC] text-white font-bold text-xs hover:bg-[#0043A8] active:scale-95 transition shadow-xs"
             >
-              Verify Your Organization
+              Request a Consultation
             </Link>
             <Link
-              href="/login"
+              href="/contact"
               className="px-5 py-3 rounded-xl border border-slate-300 bg-white text-slate-700 font-bold text-xs hover:bg-slate-50 active:scale-95 transition shadow-2xs"
             >
-              Sign In
+              Contact Us
             </Link>
           </div>
         </div>
@@ -442,32 +360,42 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* 8. INSTITUTIONAL METRICS STRIP */}
+      {/* 8. BRAND POSITIONING STRIP */}
       <section className="bg-[#041E42] text-white py-16 sm:py-20">
-        <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-          <div className="max-w-2xl">
-            <span className="text-xs font-bold uppercase tracking-wider text-blue-400">
-              Supply Scale &amp; Performance
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white mt-1">
-              Engineered for Clinical Supply Integrity
-            </h2>
-            <p className="text-sm text-slate-300 mt-2">
-              Our operations are built around the strict disciplines demanded by hospital pharmacy audit committees.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-            {statMetrics.map((stat, idx) => (
-              <div key={idx} className="border-t border-[#0A284D] pt-6 space-y-1">
-                <p className="text-3xl sm:text-4xl font-extrabold text-white font-mono tracking-tight">
-                  {stat.value}
-                </p>
-                <p className="text-xs sm:text-sm text-slate-400 font-medium">
-                  {stat.label}
-                </p>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="space-y-4">
+              <span className="text-xs font-bold uppercase tracking-wider text-blue-400">
+                What We Do
+              </span>
+              <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
+                A Business Partner, Not Just a Product Seller.
+              </h2>
+              <p className="text-sm text-slate-300 leading-relaxed">
+                Alphamed Cure partners with healthcare businesses to provide the sales, service, and support infrastructure they need to grow. We handle the work that keeps your business running.
+              </p>
+              <Link
+                href="/consultation"
+                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-[#0052CC] hover:bg-[#0043A8] text-white text-xs font-bold active:scale-95 transition shadow-sm"
+              >
+                <span>Request a Consultation</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="border-t border-[#0A284D] pt-6 space-y-2">
+                <p className="text-sm font-bold text-white">Sales</p>
+                <p className="text-xs text-slate-400">Sales management, lead support, and business development.</p>
               </div>
-            ))}
+              <div className="border-t border-[#0A284D] pt-6 space-y-2">
+                <p className="text-sm font-bold text-white">Service</p>
+                <p className="text-xs text-slate-400">Product management, sourcing, and order coordination.</p>
+              </div>
+              <div className="border-t border-[#0A284D] pt-6 space-y-2">
+                <p className="text-sm font-bold text-white">Support</p>
+                <p className="text-xs text-slate-400">Customer communication, service, and business process support.</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -510,16 +438,16 @@ export default async function HomePage() {
 
           <div className="flex flex-wrap gap-4 shrink-0 relative z-10">
             <Link
-              href="/contact"
+              href="/consultation"
               className="px-7 py-4 rounded-xl bg-white text-[#041E42] font-bold text-xs sm:text-sm hover:bg-slate-100 active:scale-95 transition shadow-md"
             >
-              Talk to Our Team
+              Request a Consultation
             </Link>
             <Link
-              href="/inquiry"
+              href="/products"
               className="px-7 py-4 rounded-xl bg-blue-700/80 border border-white/25 text-white font-bold text-xs sm:text-sm hover:bg-blue-700 active:scale-95 transition"
             >
-              Submit Item Inquiry
+              Explore Products
             </Link>
           </div>
         </div>
