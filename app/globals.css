@@ -41,47 +41,56 @@
   }
 }
 
-/* Elevation & Interactive Hover States */
+/* Elevation & Interactive Hover States — Restrained & Layered */
 .card-hover {
-  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease;
 }
 
 .card-hover:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 35px -8px rgba(4, 30, 66, 0.08), 0 10px 18px -4px rgba(4, 30, 66, 0.04);
-  border-color: #BAE6FD;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px -6px rgba(4, 30, 66, 0.07), 0 4px 10px -2px rgba(4, 30, 66, 0.03);
+  border-color: #CBD5E1;
 }
 
 .card-hover:active {
+  transform: translateY(0px) scale(0.995);
+}
+
+/* Tactile Button Feedback */
+.btn-tactile {
+  transition: background-color 150ms cubic-bezier(0.16, 1, 0.3, 1), transform 120ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 150ms ease, border-color 150ms ease;
+}
+
+.btn-tactile:hover {
   transform: translateY(-1px);
 }
 
-/* Glassmorphism Styles */
-.glass-panel {
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(226, 232, 240, 0.85);
+.btn-tactile:active {
+  transform: translateY(1px) scale(0.98);
 }
 
-.glass-panel-dark {
-  background: rgba(4, 30, 66, 0.9);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+/* Institutional Panels & Banners */
+.institutional-panel {
+  background-color: #FFFFFF;
+  border: 1px solid #E2E8F0;
 }
 
-/* Strategic Gradients */
+.institutional-panel-dark {
+  background-color: #041E42;
+  border: 1px solid #0A284D;
+}
+
+/* Strategic Solid Navy Background for Institutional Banners */
 .medical-gradient {
-  background: linear-gradient(135deg, #041E42 0%, #0A2540 50%, #0052CC 100%);
+  background-color: #041E42;
 }
 
 .medical-hero-gradient {
-  background: radial-gradient(circle at 80% 20%, rgba(2, 132, 199, 0.08) 0%, rgba(240, 247, 255, 0.6) 40%, #FAFCFE 100%);
+  background-color: #FAFCFE;
 }
 
 .medical-gradient-subtle {
-  background: linear-gradient(180deg, #F0F7FF 0%, #FAFCFE 100%);
+  background-color: #F8FAFC;
 }
 
 /* Status & Verification Badges */
@@ -119,57 +128,6 @@
   animation: skeleton-shimmer 1.8s ease-in-out infinite;
 }
 
-/* Subtle Micro-Animations */
-@keyframes pulse-emerald {
-  0%, 100% {
-    opacity: 1;
-    transform: scale(1);
-    box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.4);
-  }
-  50% {
-    opacity: 0.9;
-    transform: scale(1.05);
-    box-shadow: 0 0 0 6px rgba(22, 163, 74, 0);
-  }
-}
-
-.animate-pulse-emerald {
-  animation: pulse-emerald 2.5s infinite;
-}
-
-@keyframes loader-draw {
-  0% {
-    stroke-dashoffset: 280;
-    opacity: 0.3;
-  }
-  50% {
-    stroke-dashoffset: 0;
-    opacity: 1;
-  }
-  100% {
-    stroke-dashoffset: -280;
-    opacity: 0.3;
-  }
-}
-
-.animate-loader-draw {
-  stroke-dasharray: 280;
-  animation: loader-draw 2.4s ease-in-out infinite;
-}
-
-@keyframes float-subtle {
-  0%, 100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-5px);
-  }
-}
-
-.animate-float {
-  animation: float-subtle 4s ease-in-out infinite;
-}
-
 /* Scrollbar and Clean UI */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
@@ -183,6 +141,10 @@
 a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
   outline: 2px solid #0052CC;
   outline-offset: 2px;
+}
+
+input, textarea, select {
+  transition: border-color 150ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 150ms cubic-bezier(0.16, 1, 0.3, 1), background-color 150ms ease;
 }
 
 /* Custom height utility h-18 (72px) — used by Navbar */
@@ -199,7 +161,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 @keyframes page-enter {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(6px);
   }
   to {
     opacity: 1;
@@ -209,40 +171,32 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 
 /* ── Native View Transitions (Chrome 111+) ── */
 ::view-transition-old(root) {
-  animation: 200ms ease-out both fade-out;
+  animation: 150ms ease-out both fade-out;
 }
 ::view-transition-new(root) {
-  animation: 300ms cubic-bezier(0.16, 1, 0.3, 1) both page-enter;
+  animation: 200ms cubic-bezier(0.16, 1, 0.3, 1) both page-enter;
 }
 @keyframes fade-out {
-  to { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 0; transform: translateY(-4px); }
 }
 
-/* ── Global link & button click feel ── */
+/* ── Global link & button feel (Smooth short transitions, no scale-down gimmicks) ── */
 a, button {
-  transition-property: color, background-color, border-color, box-shadow, transform, opacity;
+  transition-property: color, background-color, border-color, box-shadow, opacity, transform;
   transition-duration: 150ms;
   transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
 }
-a:active, button:active {
-  transform: scale(0.97);
-}
 
-/* ── Ripple-like click effect on interactive elements ── */
-.click-ripple {
-  position: relative;
-  overflow: hidden;
-}
-.click-ripple::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle, rgba(255,255,255,0.25) 0%, transparent 70%);
-  opacity: 0;
-  transition: opacity 0.4s ease;
-  pointer-events: none;
-}
-.click-ripple:active::after {
-  opacity: 1;
-  transition: opacity 0s;
+/* ── Reduced motion compliance ── */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  main {
+    animation: none !important;
+  }
 }

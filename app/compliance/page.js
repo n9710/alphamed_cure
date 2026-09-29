@@ -97,7 +97,7 @@ export default function CompliancePage() {
       </div>
 
       {/* CTA Strip */}
-      <div className="bg-gradient-to-r from-blue-50 via-white to-emerald-50/50 rounded-3xl border border-blue-200/70 p-8 sm:p-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 shadow-xs">
+      <div className="bg-[#FAFCFE] rounded-2xl border border-slate-200/90 p-8 sm:p-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 shadow-2xs">
         <div className="space-y-2 max-w-xl">
           <h3 className="text-xl font-bold text-[#041E42]">
             Have questions about how we work?
@@ -108,7 +108,7 @@ export default function CompliancePage() {
         </div>
         <Link
           href="/consultation"
-          className="shrink-0 px-6 py-3.5 rounded-xl bg-[#0052CC] hover:bg-[#0043A8] text-white text-xs sm:text-sm font-bold active:scale-95 transition shadow-sm inline-flex items-center gap-2"
+          className="shrink-0 px-6 py-3.5 rounded-xl bg-[#0052CC] hover:bg-[#0043A8] text-white text-xs sm:text-sm font-bold transition shadow-sm inline-flex items-center gap-2"
         >
           <span>Request a Consultation</span>
           <ArrowRight className="w-4 h-4" />

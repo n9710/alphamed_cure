@@ -3,6 +3,115 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Search, ChevronDown, CheckCircle2 } from 'lucide-react';
+import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
+import { TRANSITION_EASE } from '@/lib/motion';
+
+/**
+ * HeroChoreography provides subtle, professional entrance orchestration
+ * for the homepage hero viewport without flashiness or floating gimmicks.
+ * Respects prefers-reduced-motion.
+ */
+export function HeroChoreography({ leftContent, rightVisual }) {
+  const shouldReduceMotion = useReducedMotion();
+
+  const containerVariants = {
+    hidden: { opacity: shouldReduceMotion ? 1 : 0 },
+    visible: {
+      opacity: 1,
+      transition: shouldReduceMotion
+        ? { duration: 0 }
+        : {
+            staggerChildren: 0.08,
+            delayChildren: 0.04,
+          },
+    },
+  };
+
+  const itemVariants = {
+    hidden: {
+      opacity: shouldReduceMotion ? 1 : 0,
+      y: shouldReduceMotion ? 0 : 12,
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.35,
+        ease: TRANSITION_EASE,
+      },
+    },
+  };
+
+  const visualVariants = {
+    hidden: {
+      opacity: shouldReduceMotion ? 1 : 0,
+      scale: shouldReduceMotion ? 1 : 0.98,
+    },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: {
+        duration: 0.42,
+        ease: TRANSITION_EASE,
+        delay: shouldReduceMotion ? 0 : 0.16,
+      },
+    },
+  };
+
+  return (
+    <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
+      <motion.div
+        className="lg:col-span-7 space-y-6"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
+        {leftContent.map((child, index) => (
+          <motion.div key={index} variants={itemVariants}>
+            {child}
+          </motion.div>
+        ))}
+      </motion.div>
+
+      <motion.div
+        className="lg:col-span-5 relative"
+        variants={visualVariants}
+        initial="hidden"
+        animate="visible"
+      >
+        {rightVisual}
+      </motion.div>
+    </div>
+  );
+}
+
+/**
+ * MotionReveal adds subtle viewport-based scroll reveals for key homepage sections.
+ * Clean, restrained entrance: opacity + gentle 14px upward translation.
+ */
+export function MotionReveal({ children, className = '', delay = 0 }) {
+  const shouldReduceMotion = useReducedMotion();
+
+  if (shouldReduceMotion) {
+    return <div className={className}>{children}</div>;
+  }
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 14 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-40px' }}
+      transition={{
+        duration: 0.35,
+        ease: TRANSITION_EASE,
+        delay,
+      }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+}
 
 export function HeroQuickSearch() {
   const [query, setQuery] = useState('');
@@ -30,28 +139,32 @@ export function HeroQuickSearch() {
     <div className="w-full max-w-2xl space-y-3.5 pt-2">
       <form
         onSubmit={handleSubmit}
-        className="relative flex items-center shadow-lg shadow-blue-950/5 rounded-2xl overflow-hidden border border-slate-200/90 bg-white/95 backdrop-blur-md focus-within:border-[#0052CC] focus-within:ring-3 focus-within:ring-blue-500/15 transition-all p-1.5"
+        className="relative flex items-center rounded-xl overflow-hidden border border-slate-200 bg-white focus-within:border-[#0052CC] focus-within:ring-2 focus-within:ring-[#0052CC]/15 transition-all p-1.5 shadow-2xs"
       >
         <div className="pl-3.5 pr-2 text-slate-400">
-          <Search className="w-5 h-5 text-blue-600" />
+          <Search className="w-5 h-5 text-[#0052CC]" />
         </div>
+        <label htmlFor="catalog-search" className="sr-only">
+          Search medical catalog by formulation, API, SKU, or consumable
+        </label>
         <input
+          id="catalog-search"
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search by formulation, active API, SKU, or consumable..."
-          className="w-full px-2 py-3 bg-transparent text-sm sm:text-base text-[#091E3A] placeholder:text-slate-400 focus:outline-hidden font-medium"
+          className="w-full px-2 py-2.5 bg-transparent text-xs sm:text-sm text-[#091E3A] placeholder:text-slate-400 focus:outline-none font-medium"
         />
         <button
           type="submit"
-          className="px-6 py-3 rounded-xl bg-[#0052CC] hover:bg-[#0043A8] text-white text-xs sm:text-sm font-bold shadow-sm active:scale-95 transition-all shrink-0 cursor-pointer"
+          className="btn-tactile px-5 py-2.5 rounded-lg bg-[#0052CC] hover:bg-[#0043A8] text-white text-xs sm:text-sm font-bold shadow-xs shrink-0 cursor-pointer"
         >
           Search Catalog
         </button>
       </form>
 
       {/* Popular Fast Search Chips */}
-      <div className="flex flex-wrap items-center gap-2 text-xs">
+      <div className="flex flex-wrap items-center gap-1.5 text-xs">
         <span className="text-slate-400 font-semibold text-[11px] tracking-wide uppercase mr-1">
           Popular:
         </span>
@@ -60,7 +173,7 @@ export function HeroQuickSearch() {
             key={item.label}
             type="button"
             onClick={() => router.push(`/products?q=${encodeURIComponent(item.q)}`)}
-            className="px-3 py-1.5 rounded-full bg-white hover:bg-blue-50 hover:text-[#0052CC] hover:border-blue-200 border border-slate-200/80 text-slate-600 text-xs font-medium transition-all active:scale-95 cursor-pointer shadow-2xs"
+            className="px-3 py-1 rounded-full bg-white hover:bg-slate-50 hover:text-[#0052CC] hover:border-slate-300 border border-slate-200 text-slate-600 text-[11px] font-medium transition-all active:scale-95 cursor-pointer shadow-2xs"
           >
             {item.label}
           </button>
@@ -99,21 +212,21 @@ export function ProcurementFaq() {
         return (
           <div
             key={idx}
-            className={`border rounded-2xl transition-all duration-200 overflow-hidden ${
+            className={`border rounded-xl transition-all duration-200 overflow-hidden ${
               isOpen
-                ? 'bg-white border-blue-300 shadow-md shadow-blue-900/5 ring-1 ring-blue-100'
-                : 'bg-white border-slate-200/80 hover:border-slate-300'
+                ? 'bg-white border-[#0052CC]/60 shadow-2xs'
+                : 'bg-white border-slate-200/90 hover:border-slate-300'
             }`}
           >
             <button
               type="button"
               onClick={() => setOpenIndex(isOpen ? -1 : idx)}
               aria-expanded={isOpen}
-              className="w-full px-6 py-5 text-left flex items-center justify-between gap-4 focus:outline-hidden cursor-pointer"
+              className="w-full px-5 py-4 text-left flex items-center justify-between gap-4 focus:outline-none cursor-pointer"
             >
               <div className="flex items-center gap-3">
                 <CheckCircle2
-                  className={`w-5 h-5 shrink-0 transition-colors ${
+                  className={`w-4 h-4 shrink-0 transition-colors duration-200 ${
                     isOpen ? 'text-[#0052CC]' : 'text-slate-400'
                   }`}
                 />
@@ -122,7 +235,7 @@ export function ProcurementFaq() {
                 </span>
               </div>
               <span
-                className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold shrink-0 transition-transform duration-200 ${
+                className={`w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold shrink-0 transition-transform duration-200 ${
                   isOpen
                     ? 'bg-blue-50 text-[#0052CC] rotate-180'
                     : 'bg-slate-100 text-slate-500'
@@ -131,14 +244,26 @@ export function ProcurementFaq() {
                 <ChevronDown className="w-4 h-4" />
               </span>
             </button>
-            {isOpen && (
-              <div className="px-6 pb-6 pt-2 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 pl-14">
-                {faq.a}
-              </div>
-            )}
+            <AnimatePresence initial={false}>
+              {isOpen && (
+                <motion.div
+                  key="content"
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: 'auto', opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.22, ease: TRANSITION_EASE }}
+                  className="overflow-hidden"
+                >
+                  <div className="px-5 pb-5 pt-1 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 pl-12 font-normal">
+                    {faq.a}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         );
       })}
     </div>
   );
 }
+

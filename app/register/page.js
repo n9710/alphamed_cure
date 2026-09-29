@@ -62,8 +62,8 @@ export default function RegisterPage() {
 
   if (success) {
     return (
-      <div className="min-h-[80vh] flex items-center justify-center py-16 px-4 sm:px-6 lg:px-8 relative overflow-hidden bg-slate-50/50">
-        <div className="max-w-lg w-full bg-white/95 backdrop-blur-md p-8 sm:p-10 rounded-3xl border border-slate-200/80 text-center space-y-6 shadow-xl shadow-slate-900/[0.04]">
+      <div className="min-h-[80vh] flex items-center justify-center py-16 px-4 sm:px-6 lg:px-8 bg-[#FAFCFE]">
+        <div className="max-w-lg w-full bg-white p-8 sm:p-10 rounded-2xl border border-slate-200/90 text-center space-y-6 shadow-2xs">
           <div className="w-16 h-16 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center mx-auto shadow-inner border border-emerald-100">
             <Check className="w-8 h-8 stroke-[2.5]" />
           </div>
@@ -95,7 +95,7 @@ export default function RegisterPage() {
           <div className="pt-2">
             <Link
               href="/login"
-              className="w-full inline-flex items-center justify-center gap-2 py-3 px-6 rounded-xl bg-slate-900 text-white text-xs font-bold hover:bg-slate-800 transition shadow-md shadow-slate-900/10"
+              className="w-full inline-flex items-center justify-center gap-2 py-3 px-6 rounded-xl bg-[#0052CC] text-white text-xs sm:text-sm font-bold hover:bg-[#0043A8] transition shadow-sm"
             >
               <span>Proceed to Partner Sign In</span>
               <ArrowRight className="w-4 h-4" />
@@ -107,11 +107,7 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="min-h-[85vh] py-16 px-4 sm:px-6 lg:px-8 relative overflow-hidden bg-slate-50/50">
-      {/* Ambient background glows */}
-      <div className="absolute top-20 right-1/3 w-[500px] h-[350px] bg-sky-200/20 blur-[100px] rounded-full pointer-events-none -z-10" />
-      <div className="absolute bottom-20 left-1/4 w-[450px] h-[300px] bg-emerald-200/15 blur-[90px] rounded-full pointer-events-none -z-10" />
-
+    <div className="min-h-[85vh] py-16 px-4 sm:px-6 lg:px-8 bg-[#FAFCFE]">
       <div className="max-w-4xl mx-auto space-y-8">
         {/* Header */}
         <div className="text-center space-y-3">
@@ -160,7 +156,7 @@ export default function RegisterPage() {
 
         {/* Form Card */}
         <div className="max-w-2xl mx-auto">
-          <div className="bg-white/95 backdrop-blur-md py-8 px-6 sm:px-10 rounded-3xl border border-slate-200/80 shadow-xl shadow-slate-900/[0.04]">
+          <div className="bg-white py-8 px-6 sm:px-10 rounded-2xl border border-slate-200/90 shadow-2xs">
             {error && (
               <div className="mb-6 p-3.5 rounded-xl bg-red-50/90 border border-red-200/80 text-red-700 text-xs font-medium flex items-start gap-2.5">
                 <AlertCircle className="w-4 h-4 shrink-0 text-red-500 mt-0.5" />
@@ -296,7 +292,7 @@ export default function RegisterPage() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full py-3.5 px-6 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold tracking-wide shadow-md shadow-slate-900/10 hover:shadow-slate-900/20 focus:outline-hidden focus:ring-2 focus:ring-slate-400 transition flex items-center justify-center gap-2 disabled:opacity-50"
+                  className="w-full py-3.5 px-6 rounded-xl bg-[#0052CC] hover:bg-[#0043A8] text-white text-xs sm:text-sm font-bold tracking-wide shadow-sm transition flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer"
                 >
                   {loading ? (
                     <div className="flex items-center gap-2">
@@ -316,7 +312,7 @@ export default function RegisterPage() {
             <div className="mt-8 pt-6 border-t border-slate-100 text-center">
               <p className="text-xs text-slate-500">
                 Already registered with an accredited account?{' '}
-                <Link href="/login" className="font-bold text-sky-600 hover:text-sky-700 transition inline-flex items-center gap-1">
+                <Link href="/login" className="font-bold text-[#0052CC] hover:text-[#0043A8] transition inline-flex items-center gap-1">
                   Sign in here
                   <ArrowRight className="w-3 h-3" />
                 </Link>

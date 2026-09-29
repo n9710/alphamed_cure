@@ -2,12 +2,12 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Mail, ArrowRight, ShieldCheck, CheckCircle2, AlertCircle, KeyRound, Check } from 'lucide-react';
+import { KeyRound, Mail, ArrowRight, AlertCircle, Check } from 'lucide-react';
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState('');
-  const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
 
   const handleSubmit = async (e) => {
@@ -24,7 +24,7 @@ export default function ForgotPasswordPage() {
 
       const data = await res.json();
       if (!res.ok) {
-        throw new Error(data.error || 'Failed to process request');
+        throw new Error(data.error || 'Failed to send reset link');
       }
 
       setSubmitted(true);
@@ -36,44 +36,41 @@ export default function ForgotPasswordPage() {
   };
 
   return (
-    <div className="min-h-[80vh] flex flex-col justify-center py-16 px-4 sm:px-6 lg:px-8 relative overflow-hidden bg-slate-50/50">
-      {/* Ambient background glow */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[300px] bg-sky-200/20 blur-[90px] rounded-full pointer-events-none -z-10" />
-
+    <div className="min-h-[80vh] flex flex-col justify-center py-16 px-4 sm:px-6 lg:px-8 bg-[#FAFCFE]">
       <div className="sm:mx-auto sm:w-full sm:max-w-md text-center space-y-3">
-        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-navy-50 border border-navy-100/60 text-navy-800 text-[11px] font-semibold tracking-wide shadow-xs">
-          <KeyRound className="w-3.5 h-3.5 text-medical-600" />
+        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-50 border border-blue-200/70 text-[#0052CC] text-[11px] font-bold tracking-wide shadow-2xs">
+          <KeyRound className="w-3.5 h-3.5" />
           <span>CREDENTIAL RECOVERY</span>
         </div>
-        <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900">
-          Reset Institutional Access
+        <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#041E42]">
+          Reset Portal Access
         </h1>
-        <p className="text-xs sm:text-sm text-slate-500 max-w-xs mx-auto leading-relaxed">
+        <p className="text-xs sm:text-sm text-slate-500 max-w-xs mx-auto leading-relaxed font-normal">
           Enter your registered institutional email to receive secure recovery credentials.
         </p>
       </div>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="bg-white/95 backdrop-blur-md py-8 px-6 sm:px-10 rounded-2xl border border-slate-200/80 shadow-xl shadow-slate-900/[0.04]">
+        <div className="bg-white py-8 px-6 sm:px-10 rounded-2xl border border-slate-200/90 shadow-2xs">
           {submitted ? (
             <div className="text-center space-y-5">
-              <div className="w-14 h-14 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center mx-auto shadow-inner border border-emerald-100">
+              <div className="w-14 h-14 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center mx-auto border border-emerald-100">
                 <Check className="w-7 h-7 stroke-[2.5]" />
               </div>
               <div className="space-y-2">
-                <h2 className="text-base font-bold text-slate-900">
+                <h2 className="text-base font-bold text-[#041E42]">
                   Recovery Instructions Dispatched
                 </h2>
-                <p className="text-xs text-slate-600 leading-relaxed">
+                <p className="text-xs text-slate-600 leading-relaxed font-normal">
                   If an institutional partner account exists for <strong className="text-slate-800 font-semibold">{email}</strong>, recovery instructions and a secure token have been sent to that address.
                 </p>
               </div>
               <div className="pt-2">
                 <Link
                   href="/login"
-                  className="w-full inline-flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-slate-900 text-white text-xs font-bold hover:bg-slate-800 transition shadow-md shadow-slate-900/10"
+                  className="w-full inline-flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-[#0052CC] text-white text-xs sm:text-sm font-bold hover:bg-[#0043A8] transition shadow-sm"
                 >
-                  <span>Return to Client Sign In</span>
+                  <span>Return to Partner Sign In</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
               </div>
@@ -81,7 +78,7 @@ export default function ForgotPasswordPage() {
           ) : (
             <form className="space-y-4" onSubmit={handleSubmit}>
               {error && (
-                <div className="p-3.5 rounded-xl bg-red-50/90 border border-red-200/80 text-red-700 text-xs font-medium flex items-start gap-2.5">
+                <div className="p-3.5 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs font-medium flex items-start gap-2.5">
                   <AlertCircle className="w-4 h-4 shrink-0 text-red-500 mt-0.5" />
                   <span>{error}</span>
                 </div>
@@ -101,7 +98,7 @@ export default function ForgotPasswordPage() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="purchasing@hospital.org"
-                    className="block w-full pl-10 pr-3.5 py-2.5 text-xs text-slate-900 bg-slate-50/50 hover:bg-white focus:bg-white border border-slate-200 rounded-xl shadow-2xs focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 focus:outline-hidden transition font-medium"
+                    className="block w-full pl-10 pr-3.5 py-2.5 text-xs sm:text-sm text-slate-900 bg-white hover:bg-slate-50/50 focus:bg-white border border-slate-200 rounded-xl shadow-2xs focus:ring-2 focus:ring-blue-500/20 focus:border-[#0052CC] focus:outline-hidden transition font-normal"
                   />
                 </div>
               </div>
@@ -109,7 +106,7 @@ export default function ForgotPasswordPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full mt-2 py-3 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold tracking-wide shadow-md shadow-slate-900/10 hover:shadow-slate-900/20 focus:outline-hidden focus:ring-2 focus:ring-slate-400 transition flex items-center justify-center gap-2 disabled:opacity-50"
+                className="w-full mt-2 py-3 px-4 rounded-xl bg-[#0052CC] hover:bg-[#0043A8] text-white text-xs sm:text-sm font-bold tracking-wide shadow-sm transition flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer"
               >
                 {loading ? (
                   <div className="flex items-center gap-2">
@@ -129,7 +126,7 @@ export default function ForgotPasswordPage() {
                   href="/login"
                   className="text-xs font-semibold text-slate-500 hover:text-slate-800 transition"
                 >
-                  ← Back to Portal Sign In
+                  ← Back to Partner Sign In
                 </Link>
               </div>
             </form>

@@ -2,74 +2,83 @@ import Link from 'next/link';
 import { SERVICES, SERVICE_PILLARS, getServicesByPillar } from '@/data/services';
 import {
   TrendingUp,
+  Target,
+  Handshake,
   Package,
-  Headphones,
+  Search,
+  ClipboardList,
+  PhoneCall,
+  MessageSquare,
+  Settings,
+  ShieldCheck,
   CheckCircle2,
   ArrowRight,
-  PhoneCall,
+  Building2,
+  Activity,
+  Layers,
 } from 'lucide-react';
 
 export const metadata = {
   title: 'Our Services | Alphamed Cure',
   description:
-    'Alphamed Cure provides Sales, Service, and Support to healthcare businesses. Explore our capabilities across sales management, product management, and customer support.',
+    'Alphamed Cure provides Sales, Service, Support, and Healthcare Solutions to healthcare businesses. Explore our capabilities across commercial management, sourcing, and customer operations.',
 };
 
 const PILLAR_CONFIG = {
   Sales: {
     icon: TrendingUp,
-    color: 'blue',
-    description: 'We manage the full sales cycle — from lead engagement to order closure.',
+    badge: 'bg-blue-50 text-[#0052CC] border-blue-200/80',
+    iconBg: 'bg-blue-50 text-[#0052CC] border-blue-200/60',
+    description: 'We manage the commercial cycle — from qualified lead engagement to institutional order closure.',
   },
   Service: {
     icon: Package,
-    color: 'emerald',
-    description: 'We handle product management, sourcing coordination, and order management.',
+    badge: 'bg-emerald-50 text-emerald-800 border-emerald-200/80',
+    iconBg: 'bg-emerald-50 text-emerald-600 border-emerald-200/60',
+    description: 'We coordinate product portfolios, supplier communication, inventory allocation, and fulfillment.',
   },
   Support: {
-    icon: Headphones,
-    color: 'indigo',
-    description: 'From customer communication to business process support, we keep operations running.',
+    icon: PhoneCall,
+    badge: 'bg-indigo-50 text-indigo-800 border-indigo-200/80',
+    iconBg: 'bg-indigo-50 text-indigo-600 border-indigo-200/60',
+    description: 'Dedicated customer communication, dispute resolution, and operational workflow maintenance.',
   },
 };
 
-const COLOR_MAP = {
-  blue: {
-    badge: 'bg-blue-50 text-[#0052CC] border border-blue-100',
-    icon: 'bg-blue-50 text-[#0052CC] border-blue-100/80',
-    pillarBg: 'bg-blue-50/60',
-    pillarBorder: 'border-blue-200/50',
-  },
-  emerald: {
-    badge: 'bg-emerald-50 text-emerald-800 border border-emerald-200',
-    icon: 'bg-emerald-50 text-emerald-600 border-emerald-100/80',
-    pillarBg: 'bg-emerald-50/60',
-    pillarBorder: 'border-emerald-200/50',
-  },
-  indigo: {
-    badge: 'bg-indigo-50 text-indigo-800 border border-indigo-200',
-    icon: 'bg-indigo-50 text-indigo-600 border-indigo-100/80',
-    pillarBg: 'bg-indigo-50/60',
-    pillarBorder: 'border-indigo-200/50',
-  },
+const SERVICE_ICON_MAP = {
+  'sales-management': TrendingUp,
+  'lead-support': Target,
+  'business-support': Handshake,
+  'product-management': Package,
+  'product-sourcing': Search,
+  'order-inquiry-management': ClipboardList,
+  'customer-communication': PhoneCall,
+  'customer-service': MessageSquare,
+  'business-process-support': Settings,
 };
+
+function getServiceIcon(id) {
+  const IconComponent = SERVICE_ICON_MAP[id] || Package;
+  return <IconComponent className="w-5 h-5" />;
+}
 
 export default function ServicesPage() {
   const byPillar = getServicesByPillar();
 
   return (
-    <div className="space-y-16 sm:space-y-24 pb-20">
+    <div className="space-y-16 sm:space-y-20 pb-20">
       {/* Header */}
-      <section className="bg-gradient-to-b from-[#F0F7FF] via-[#FAFCFE] to-white py-16 sm:py-20 px-4 sm:px-6 lg:px-8 border-b border-slate-200/90">
+      <section className="bg-[#FAFCFE] py-14 sm:py-18 px-4 sm:px-6 lg:px-8 border-b border-slate-200/90">
         <div className="max-w-7xl mx-auto space-y-5">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-slate-200/80 text-[#0052CC] text-xs font-bold shadow-2xs">
-            <span>What We Do</span>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-slate-200/90 text-[#0052CC] text-xs font-bold shadow-2xs">
+            <Building2 className="w-3.5 h-3.5" />
+            <span>Healthcare Enterprise Services</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-[#041E42] max-w-3xl">
-            Sales. Service. Support.
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-[#041E42] max-w-3xl leading-tight">
+            Sales · Service · Support · Healthcare Solutions
           </h1>
           <p className="text-base sm:text-lg text-slate-600 max-w-3xl leading-relaxed font-normal">
-            Alphamed Cure provides structured business support to healthcare product companies. We work as an extension of your team — managing sales, coordinating products, and delivering customer support.
+            Alphamed Cure operates as a trusted operational and commercial arm for healthcare businesses. We manage client relationships, streamline procurement, and maintain consistent operational standards.
           </p>
           <div className="flex flex-wrap gap-3 pt-2">
             <Link
@@ -81,35 +90,60 @@ export default function ServicesPage() {
             </Link>
             <Link
               href="/contact"
-              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl border border-slate-200 bg-white text-[#041E42] text-sm font-bold hover:bg-slate-50 transition"
+              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl border border-slate-200 bg-white text-[#041E42] text-sm font-bold hover:bg-slate-50 transition shadow-2xs"
             >
               <PhoneCall className="w-4 h-4 text-slate-400" />
-              <span>Contact Us</span>
+              <span>Contact Desk</span>
             </Link>
           </div>
         </div>
       </section>
 
-      {/* Three Pillars */}
+      {/* 4 Core Pillars Overview */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="bg-white rounded-xl border border-slate-200/90 p-5 shadow-2xs space-y-2">
+            <div className="w-8 h-8 rounded-lg bg-blue-50 text-[#0052CC] flex items-center justify-center font-bold text-xs">01</div>
+            <h3 className="text-sm font-bold text-[#041E42]">Sales Management</h3>
+            <p className="text-xs text-slate-500 leading-relaxed">Lead qualification, contract discussions, and commercial closure.</p>
+          </div>
+          <div className="bg-white rounded-xl border border-slate-200/90 p-5 shadow-2xs space-y-2">
+            <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center font-bold text-xs">02</div>
+            <h3 className="text-sm font-bold text-[#041E42]">Product Service</h3>
+            <p className="text-xs text-slate-500 leading-relaxed">Portfolio coordination, sourcing, and order tracking workflows.</p>
+          </div>
+          <div className="bg-white rounded-xl border border-slate-200/90 p-5 shadow-2xs space-y-2">
+            <div className="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-700 flex items-center justify-center font-bold text-xs">03</div>
+            <h3 className="text-sm font-bold text-[#041E42]">Support Desk</h3>
+            <p className="text-xs text-slate-500 leading-relaxed">Direct institutional communication and escalation handling.</p>
+          </div>
+          <div className="bg-white rounded-xl border border-slate-200/90 p-5 shadow-2xs space-y-2">
+            <div className="w-8 h-8 rounded-lg bg-teal-50 text-teal-700 flex items-center justify-center font-bold text-xs">04</div>
+            <h3 className="text-sm font-bold text-[#041E42]">Healthcare Solutions</h3>
+            <p className="text-xs text-slate-500 leading-relaxed">Integrated facility procurement and supply infrastructure advisory.</p>
+          </div>
+        </div>
+      </section>
+
+      {/* Three Pillars Detailed */}
       {SERVICE_PILLARS.map((pillar) => {
         const config = PILLAR_CONFIG[pillar];
-        const colors = COLOR_MAP[config.color];
         const Icon = config.icon;
         const services = byPillar[pillar];
 
         return (
-          <section key={pillar} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+          <section key={pillar} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
             {/* Pillar header */}
-            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-              <div className="space-y-2">
-                <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold ${colors.badge}`}>
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 border-b border-slate-200/80 pb-4">
+              <div className="space-y-1.5">
+                <div className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold border ${config.badge}`}>
                   <Icon className="w-3.5 h-3.5" />
-                  <span>{pillar}</span>
+                  <span>{pillar} Pillar</span>
                 </div>
                 <h2 className="text-2xl sm:text-3xl font-extrabold text-[#041E42] tracking-tight">
                   {pillar} Services
                 </h2>
-                <p className="text-xs sm:text-sm text-slate-500 max-w-xl">
+                <p className="text-xs sm:text-sm text-slate-500 max-w-xl font-normal">
                   {config.description}
                 </p>
               </div>
@@ -120,27 +154,27 @@ export default function ServicesPage() {
               {services.map((service) => (
                 <div
                   key={service.id}
-                  className="bg-white rounded-2xl border border-slate-200/90 p-8 flex flex-col justify-between card-hover shadow-2xs group"
+                  className="bg-white rounded-xl border border-slate-200 card-hover p-6 flex flex-col justify-between shadow-2xs hover:border-[#0052CC]/40 hover:shadow-md transition-all duration-200 group active:scale-[0.995]"
                 >
-                  <div className="space-y-5">
-                    <div className={`w-12 h-12 rounded-xl border flex items-center justify-center group-hover:scale-110 transition-all duration-300 ${colors.icon}`}>
-                      <span className="text-xl">{service.icon}</span>
+                  <div className="space-y-4">
+                    <div className={`w-10 h-10 rounded-lg border flex items-center justify-center transition-all duration-200 group-hover:scale-105 ${config.iconBg}`}>
+                      {getServiceIcon(service.id)}
                     </div>
                     <div>
-                      <h3 className="text-lg font-bold text-[#041E42] group-hover:text-[#0052CC] transition-colors">
+                      <h3 className="text-base font-bold text-[#041E42] group-hover:text-[#0052CC] transition-colors duration-200">
                         {service.title}
                       </h3>
-                      <p className="text-xs text-slate-500 mt-1 leading-relaxed">
+                      <p className="text-xs text-slate-500 mt-1 leading-relaxed font-normal">
                         {service.shortDesc}
                       </p>
                     </div>
-                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed pt-3 border-t border-slate-100 font-normal">
+                    <p className="text-xs text-slate-600 leading-relaxed pt-3 border-t border-slate-100 font-normal">
                       {service.fullDesc}
                     </p>
 
                     <div className="pt-2 space-y-2">
                       <h4 className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
-                        What we handle
+                        Key Responsibilities
                       </h4>
                       <ul className="space-y-1.5">
                         {service.features.map((f, i) => (
@@ -153,13 +187,13 @@ export default function ServicesPage() {
                     </div>
                   </div>
 
-                  <div className="pt-6 mt-6 border-t border-slate-100">
+                  <div className="pt-5 mt-5 border-t border-slate-100">
                     <Link
                       href="/consultation"
-                      className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0052CC] hover:text-[#0043A8] group-hover:translate-x-1 transition-transform"
+                      className="btn-tactile inline-flex items-center gap-1.5 text-xs font-bold text-[#0052CC] hover:text-[#0043A8] transition-colors"
                     >
-                      <span>Discuss This Service</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
+                      <span>Discuss {service.title}</span>
+                      <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform duration-200" />
                     </Link>
                   </div>
                 </div>
@@ -169,43 +203,89 @@ export default function ServicesPage() {
         );
       })}
 
+      {/* Fourth Pillar: Healthcare Solutions */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+        <div className="border-b border-slate-200/80 pb-4 space-y-1.5">
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold bg-teal-50 text-teal-800 border border-teal-200/80">
+            <Layers className="w-3.5 h-3.5" />
+            <span>Integrated Capability</span>
+          </div>
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#041E42] tracking-tight">
+            Healthcare Solutions
+          </h2>
+          <p className="text-xs sm:text-sm text-slate-500 max-w-xl font-normal">
+            When individual pillars are combined, Alphamed Cure provides comprehensive institutional support tailored to healthcare systems.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="bg-white rounded-xl border border-slate-200/90 p-6 space-y-3 shadow-2xs">
+            <div className="w-10 h-10 rounded-lg bg-teal-50 border border-teal-200/60 text-teal-700 flex items-center justify-center">
+              <Activity className="w-5 h-5" />
+            </div>
+            <h3 className="text-base font-bold text-[#041E42]">Procurement Program Architecture</h3>
+            <p className="text-xs text-slate-600 leading-relaxed font-normal">
+              Structuring multi-item procurement packages across pharmaceutical and medical hardware supplies for hospitals and clinical centers.
+            </p>
+          </div>
+          <div className="bg-white rounded-xl border border-slate-200/90 p-6 space-y-3 shadow-2xs">
+            <div className="w-10 h-10 rounded-lg bg-teal-50 border border-teal-200/60 text-teal-700 flex items-center justify-center">
+              <ShieldCheck className="w-5 h-5" />
+            </div>
+            <h3 className="text-base font-bold text-[#041E42]">Supply Continuity Coordination</h3>
+            <p className="text-xs text-slate-600 leading-relaxed font-normal">
+              Establishing routine communication cadence, buffer stock oversight, and proactive requisition tracking to minimize stock-outs.
+            </p>
+          </div>
+          <div className="bg-white rounded-xl border border-slate-200/90 p-6 space-y-3 shadow-2xs">
+            <div className="w-10 h-10 rounded-lg bg-teal-50 border border-teal-200/60 text-teal-700 flex items-center justify-center">
+              <Building2 className="w-5 h-5" />
+            </div>
+            <h3 className="text-base font-bold text-[#041E42]">Institutional Partner Alignment</h3>
+            <p className="text-xs text-slate-600 leading-relaxed font-normal">
+              Synchronizing operational expectations between manufacturers, accredited suppliers, and healthcare facilities.
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* How We Work */}
-      <section className="bg-slate-50 py-16 sm:py-20 border-y border-slate-200/90">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-          <div className="text-center max-w-3xl mx-auto space-y-3">
+      <section className="bg-[#FAFCFE] py-14 sm:py-18 border-y border-slate-200/90">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+          <div className="text-center max-w-2xl mx-auto space-y-2">
             <span className="text-xs font-bold uppercase tracking-wider text-[#0052CC]">
-              Our Approach
+              Operational Engagement
             </span>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-[#041E42] tracking-tight">
               How We Work With You
             </h2>
-            <p className="text-sm text-slate-600 font-normal">
-              We embed ourselves into your business operations and handle the work that keeps your healthcare business growing.
+            <p className="text-xs sm:text-sm text-slate-600 font-normal">
+              We embed directly into your commercial and supply operations to maintain reliability and consistency.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-white p-8 rounded-3xl border border-slate-200/90 space-y-3 shadow-2xs">
-              <div className="text-[#0052CC] font-mono font-extrabold text-2xl">01</div>
-              <h3 className="text-lg font-bold text-[#041E42]">Understand Your Business</h3>
-              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
-                We start by learning about your products, your clients, and your business goals — so we can structure the right support.
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="bg-white p-6 rounded-xl border border-slate-200/90 space-y-3 shadow-2xs">
+              <div className="text-[#0052CC] font-mono font-extrabold text-xl">01</div>
+              <h3 className="text-base font-bold text-[#041E42]">Operational Assessment</h3>
+              <p className="text-xs text-slate-600 leading-relaxed font-normal">
+                We analyze your current product lines, target client facilities, and commercial bottlenecks to configure appropriate support.
               </p>
             </div>
 
-            <div className="bg-white p-8 rounded-3xl border border-slate-200/90 space-y-3 shadow-2xs">
-              <div className="text-[#0052CC] font-mono font-extrabold text-2xl">02</div>
-              <h3 className="text-lg font-bold text-[#041E42]">Handle the Work</h3>
-              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
-                We take over the sales management, product coordination, and customer support responsibilities — professionally and consistently.
+            <div className="bg-white p-6 rounded-xl border border-slate-200/90 space-y-3 shadow-2xs">
+              <div className="text-[#0052CC] font-mono font-extrabold text-xl">02</div>
+              <h3 className="text-base font-bold text-[#041E42]">Execution &amp; Management</h3>
+              <p className="text-xs text-slate-600 leading-relaxed font-normal">
+                We execute sales management, product coordination, and customer communication systematically with transparent tracking.
               </p>
             </div>
 
-            <div className="bg-white p-8 rounded-3xl border border-slate-200/90 space-y-3 shadow-2xs">
-              <div className="text-[#0052CC] font-mono font-extrabold text-2xl">03</div>
-              <h3 className="text-lg font-bold text-[#041E42]">Grow Together</h3>
-              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
-                As your business grows, we scale our support. You focus on your product and strategy — we handle the execution.
+            <div className="bg-white p-6 rounded-xl border border-slate-200/90 space-y-3 shadow-2xs">
+              <div className="text-[#0052CC] font-mono font-extrabold text-xl">03</div>
+              <h3 className="text-base font-bold text-[#041E42]">Continuous Scale</h3>
+              <p className="text-xs text-slate-600 leading-relaxed font-normal">
+                As your facility partnerships expand, our operational support scales to handle higher volumes and broader catalog offerings.
               </p>
             </div>
           </div>
@@ -214,25 +294,25 @@ export default function ServicesPage() {
 
       {/* CTA Banner */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="rounded-3xl medical-gradient text-white p-8 sm:p-14 flex flex-col md:flex-row items-start md:items-center justify-between gap-8 shadow-xl card-hover">
-          <div className="space-y-3 max-w-xl">
+        <div className="rounded-2xl bg-[#041E42] border border-[#0052CC]/30 text-white p-8 sm:p-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-8 shadow-sm">
+          <div className="space-y-2.5 max-w-xl">
             <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
               Ready to discuss how we can support your business?
             </h2>
-            <p className="text-xs sm:text-sm text-blue-100 leading-relaxed font-normal">
-              Request a consultation and we&apos;ll discuss which of our Sales, Service, and Support capabilities would best fit your needs.
+            <p className="text-xs sm:text-sm text-blue-100/90 leading-relaxed font-normal">
+              Schedule a discovery session to align on which Sales, Service, Support, or Healthcare Solutions model fits your organization.
             </p>
           </div>
-          <div className="flex flex-wrap gap-4 shrink-0">
+          <div className="flex flex-wrap gap-3 shrink-0">
             <Link
               href="/consultation"
-              className="px-7 py-4 rounded-xl bg-white text-[#041E42] font-bold text-xs sm:text-sm hover:bg-slate-100 active:scale-95 transition shadow-md"
+              className="px-6 py-3.5 rounded-xl bg-[#0052CC] text-white font-bold text-xs sm:text-sm hover:bg-[#0043A8] transition shadow-xs"
             >
               Request a Consultation
             </Link>
             <Link
               href="/contact"
-              className="px-7 py-4 rounded-xl bg-blue-700/80 border border-white/25 text-white font-bold text-xs sm:text-sm hover:bg-blue-700 active:scale-95 transition"
+              className="px-6 py-3.5 rounded-xl border border-slate-600 bg-white/5 text-white font-bold text-xs sm:text-sm hover:bg-white/10 transition"
             >
               Contact Us
             </Link>

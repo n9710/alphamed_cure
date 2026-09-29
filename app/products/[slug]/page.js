@@ -117,9 +117,9 @@ export default async function ProductDetailPage({ params }) {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
         {/* Left Column: Product Visual Showcase */}
         <div className="lg:col-span-5 space-y-6 lg:sticky lg:top-28">
-          <div className="aspect-square bg-gradient-to-b from-slate-50/80 via-white to-blue-50/20 rounded-3xl border border-slate-200/90 flex flex-col items-center justify-center p-8 shadow-xs relative overflow-hidden group">
-            <div className="relative z-10 w-36 h-36 rounded-3xl bg-white shadow-md border border-slate-200/80 flex items-center justify-center text-[#0052CC] group-hover:scale-110 group-hover:rotate-2 transition-transform duration-300">
-              <CategoryIcon className="w-20 h-20 stroke-[1.5]" />
+          <div className="aspect-square bg-slate-50/60 rounded-2xl border border-slate-200/90 flex flex-col items-center justify-center p-8 shadow-2xs relative overflow-hidden group">
+            <div className="relative z-10 w-32 h-32 rounded-2xl bg-white shadow-xs border border-slate-200/90 flex items-center justify-center text-[#0052CC] transition-colors">
+              <CategoryIcon className="w-16 h-16 stroke-[1.5]" />
             </div>
 
             <div className="absolute top-4 left-4">

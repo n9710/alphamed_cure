@@ -10,26 +10,23 @@ import {
 export default function Footer() {
   return (
     <footer className="bg-[#041E42] text-slate-300 pt-16 pb-12 border-t border-[#0A284D]">
-      <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Main Footer Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-[#0A284D]">
           {/* Col 1 & 2: Brand Identity & Accreditations */}
           <div className="space-y-5 lg:col-span-2">
-            {/* Logo on clean white plate for maximum contrast & crispness */}
-            <div className="bg-white p-2.5 rounded-2xl inline-block shadow-md">
-              <div className="relative w-36 h-9">
-                <Image
-                  src="/assets/alphamed_cure_logo.png"
-                  alt="Alphamed Cure Logo"
-                  fill
-                  sizes="192px"
-                  className="object-contain object-center"
-                />
-              </div>
+            <div className="relative w-36 h-9">
+              <Image
+                src="/assets/alphamed_cure_logo.png"
+                alt="Alphamed Cure Logo"
+                fill
+                sizes="192px"
+                className="object-contain object-left"
+              />
             </div>
 
             <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-md font-normal">
-              Alphamed Cure is a healthcare business partner providing Sales, Service, and Support to businesses in the healthcare products space. We help businesses grow through structured sales management, product coordination, and customer support.
+              Alphamed Cure is a healthcare business partner providing Sales, Service, Support, and Healthcare Solutions. We help healthcare businesses maintain reliable commercial coordination, product portfolio management, and institutional communication.
             </p>
           </div>
 
@@ -61,7 +58,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link href="/inquiry" className="hover:text-blue-400 transition-colors">
-                  Product Inquiry
+                  Institutional Inquiry
                 </Link>
               </li>
             </ul>
@@ -84,6 +81,11 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/compliance" className="hover:text-blue-400 transition-colors">
+                  Compliance &amp; Standards
+                </Link>
+              </li>
+              <li>
                 <Link href="/consultation" className="hover:text-blue-400 transition-colors">
                   Request Consultation
                 </Link>
@@ -98,31 +100,26 @@ export default function Footer() {
                   Privacy Policy
                 </Link>
               </li>
-              <li>
-                <Link href="/cookies" className="hover:text-blue-400 transition-colors">
-                  Cookie Policy
-                </Link>
-              </li>
             </ul>
           </div>
 
           {/* Col 5: Contact Desk */}
           <div className="space-y-3.5">
             <h4 className="text-xs font-bold text-white uppercase tracking-wider">
-              Contact
+              Contact Desk
             </h4>
             <div className="text-xs space-y-2.5 text-slate-300">
               <p className="text-slate-100 font-semibold flex items-center gap-1.5">
                 <Building2 className="w-3.5 h-3.5 text-blue-400" />
                 <span>Alphamed Cure</span>
               </p>
-              <p className="text-slate-400 leading-relaxed">
-                [Address to be confirmed]
+              <p className="text-slate-400 leading-relaxed font-normal">
+                Institutional Operations &amp; Support
               </p>
               <div className="pt-1 space-y-1.5">
                 <p className="flex items-center gap-1.5">
                   <PhoneCall className="w-3.5 h-3.5 text-emerald-400" />
-                  <span><a href="/contact" className="text-white hover:text-sky-300 transition-colors">Contact Us</a></span>
+                  <span><Link href="/contact" className="text-white hover:text-sky-300 transition-colors">Contact Form</Link></span>
                 </p>
                 <p className="flex items-center gap-1.5 truncate">
                   <Mail className="w-3.5 h-3.5 text-blue-400" />
@@ -133,7 +130,7 @@ export default function Footer() {
               <div className="pt-3">
                 <Link
                   href="/consultation"
-                  className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#0052CC] hover:bg-[#0043A8] text-white font-bold text-xs shadow-xs active:scale-95 transition"
+                  className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#0052CC] hover:bg-[#0043A8] text-white font-bold text-xs shadow-xs transition"
                 >
                   <span>Request Consultation</span>
                   <ArrowRight className="w-3.5 h-3.5" />

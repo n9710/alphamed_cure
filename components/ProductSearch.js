@@ -60,7 +60,7 @@ export default function ProductSearch({ defaultValue = '', categorySlug = '' }) 
         <button
           type="button"
           onClick={handleClear}
-          className="p-2 rounded-xl border border-slate-200 text-slate-500 hover:bg-slate-50 flex items-center shrink-0 transition"
+          className="btn-tactile p-2 rounded-xl border border-slate-200 text-slate-500 hover:bg-slate-50 flex items-center shrink-0 transition active:scale-95 cursor-pointer"
           title="Clear search"
           aria-label="Clear search"
         >
@@ -71,7 +71,7 @@ export default function ProductSearch({ defaultValue = '', categorySlug = '' }) 
       <button
         type="submit"
         disabled={isPending}
-        className="px-4 sm:px-6 py-2.5 rounded-xl bg-[#0052CC] hover:bg-[#0043A8] disabled:opacity-60 text-white text-xs sm:text-sm font-bold shadow-xs active:scale-95 transition shrink-0 cursor-pointer whitespace-nowrap"
+        className="btn-tactile px-4 sm:px-6 py-2.5 rounded-xl bg-[#0052CC] hover:bg-[#0043A8] disabled:opacity-60 text-white text-xs sm:text-sm font-bold shadow-xs transition shrink-0 cursor-pointer whitespace-nowrap active:scale-[0.98]"
       >
         <span className="hidden sm:inline">{isPending ? 'Searching...' : 'Search'}</span>
         <Search className="w-4 h-4 sm:hidden" />

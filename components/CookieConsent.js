@@ -23,7 +23,7 @@ export default function CookieConsent() {
   return (
     <aside
       aria-label="Cookie and telemetry consent banner"
-      className="fixed bottom-4 left-4 right-4 sm:left-auto sm:right-6 sm:max-w-md z-50 bg-[#041E42]/95 backdrop-blur-md text-white p-5 rounded-3xl border border-[#0A284D] shadow-2xl space-y-3.5"
+      className="fixed bottom-4 left-4 right-4 sm:left-auto sm:right-6 sm:max-w-md z-50 bg-[#041E42] text-white p-5 rounded-2xl border border-[#0A284D] shadow-xl space-y-3.5"
     >
       <div className="flex items-start gap-3">
         <div className="w-8 h-8 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center shrink-0 mt-0.5">

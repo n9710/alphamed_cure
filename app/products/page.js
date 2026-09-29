@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import ProductCard from '@/components/ProductCard';
 import ProductSearch from '@/components/ProductSearch';
+import ProductGridAnimated from '@/components/ProductGridAnimated';
 import { getProducts, getCategories } from '@/lib/products';
 import { getSession } from '@/lib/auth';
 import {
@@ -12,7 +13,25 @@ import {
   Package,
   Layers,
   ChevronRight,
+  Pill,
+  Stethoscope,
+  Activity,
+  FlaskConical,
+  Tag,
+  Shield,
 } from 'lucide-react';
+
+const getCategoryIcon = (categorySlug) => {
+  const slug = (categorySlug || '').toLowerCase();
+  if (slug.includes('pharma')) return Pill;
+  if (slug.includes('med')) return Stethoscope;
+  if (slug.includes('dme')) return Activity;
+  if (slug.includes('supp')) return Package;
+  if (slug.includes('vial')) return FlaskConical;
+  if (slug.includes('label')) return Tag;
+  if (slug.includes('ppe')) return Shield;
+  return Package;
+};
 
 export const metadata = {
   title: 'Products Catalog | Alphamed Cure',
@@ -54,7 +73,7 @@ export default async function ProductsPage({ searchParams }) {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-8">
       {/* Page Header with Institutional Status Strip */}
-      <div className="border-b border-slate-200/90 pb-7">
+      <div className="border-b border-slate-200 pb-7">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-5">
           <div className="space-y-1.5">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200/60 text-[#0052CC] text-xs font-bold">
@@ -71,14 +90,14 @@ export default async function ProductsPage({ searchParams }) {
 
           {/* Pricing Tier Status Pill */}
           {canSeePrices ? (
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold self-start md:self-auto shadow-2xs">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            <div className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold self-start md:self-auto shadow-2xs">
+              <span className="w-2 h-2 rounded-full bg-emerald-600" />
               <span>✓ Verified Facility Pricing Active</span>
             </div>
           ) : (
-            <div className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-700 text-xs font-medium self-start md:self-auto shadow-2xs">
+            <div className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-50 border border-slate-200 text-slate-700 text-xs font-medium self-start md:self-auto shadow-2xs">
               <Lock className="w-3.5 h-3.5 text-[#0052CC]" />
-              <span>B2B Wholesale Rates Locked:</span>
+              <span>B2B Wholesale Rates:</span>
               <Link
                 href="/login"
                 className="font-bold text-[#0052CC] underline hover:text-[#0043A8] ml-0.5"
@@ -97,7 +116,7 @@ export default async function ProductsPage({ searchParams }) {
           <div className="flex gap-2 overflow-x-auto pb-2 no-scrollbar -mx-4 px-4">
             <Link
               href={query ? `/products?q=${encodeURIComponent(query)}` : '/products'}
-              className={`px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap shrink-0 transition-all ${
+              className={`btn-tactile px-3.5 py-1.5 rounded-full text-xs font-bold whitespace-nowrap shrink-0 transition-colors ${
                 !categorySlug
                   ? 'bg-[#0052CC] text-white shadow-xs'
                   : 'bg-white text-slate-700 hover:bg-slate-100 border border-slate-200'
@@ -105,19 +124,25 @@ export default async function ProductsPage({ searchParams }) {
             >
               All Formulations
             </Link>
-            {categories.map((cat) => (
-              <Link
-                key={cat.id}
-                href={`/products?category=${cat.slug}${query ? `&q=${encodeURIComponent(query)}` : ''}`}
-                className={`px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap shrink-0 transition-all ${
-                  categorySlug === cat.slug
-                    ? 'bg-[#0052CC] text-white shadow-xs'
-                    : 'bg-white text-slate-700 hover:bg-slate-100 border border-slate-200'
-                }`}
-              >
-                <span>{cat.icon || '📦'} {cat.name}</span>
-              </Link>
-            ))}
+            {categories.map((cat) => {
+              const CatIcon = getCategoryIcon(cat.slug);
+              return (
+                <Link
+                  key={cat.id}
+                  href={`/products?category=${cat.slug}${query ? `&q=${encodeURIComponent(query)}` : ''}`}
+                  className={`btn-tactile px-3.5 py-1.5 rounded-full text-xs font-bold whitespace-nowrap shrink-0 transition-colors ${
+                    categorySlug === cat.slug
+                      ? 'bg-[#0052CC] text-white shadow-xs'
+                      : 'bg-white text-slate-700 hover:bg-slate-100 border border-slate-200'
+                  }`}
+                >
+                  <span className="flex items-center gap-1.5">
+                    <CatIcon className="w-3.5 h-3.5" aria-hidden="true" />
+                    <span>{cat.name}</span>
+                  </span>
+                </Link>
+              );
+            })}
           </div>
         </div>
       </div>
@@ -125,7 +150,7 @@ export default async function ProductsPage({ searchParams }) {
       {/* Main Filter & Catalog Grid Layout */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-8 items-start">
         {/* Desktop Sticky Category Sidebar */}
-        <aside className="hidden md:block space-y-4 bg-white p-6 rounded-2xl border border-slate-200/90 shadow-2xs sticky top-28">
+        <aside className="hidden md:block space-y-4 bg-white p-5 rounded-xl border border-slate-200 shadow-2xs sticky top-28">
           <div className="flex items-center justify-between pb-3 border-b border-slate-100">
             <div className="flex items-center gap-2">
               <Filter className="w-4 h-4 text-[#0052CC]" />
@@ -166,18 +191,19 @@ export default async function ProductsPage({ searchParams }) {
 
             {categories.map((cat) => {
               const isSelected = categorySlug === cat.slug;
+              const CatIcon = getCategoryIcon(cat.slug);
               return (
                 <Link
                   key={cat.id}
                   href={`/products?category=${cat.slug}${query ? `&q=${encodeURIComponent(query)}` : ''}`}
-                  className={`flex justify-between items-center px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all ${
+                  className={`flex justify-between items-center px-3 py-2 rounded-lg text-xs font-semibold transition-colors ${
                     isSelected
-                      ? 'bg-[#0052CC] text-white shadow-xs'
-                      : 'text-slate-600 hover:bg-slate-50'
+                      ? 'bg-[#0052CC] text-white shadow-2xs font-bold'
+                      : 'text-slate-700 hover:bg-slate-50 hover:text-[#0052CC]'
                   }`}
                 >
                   <span className="truncate flex items-center gap-2">
-                    <span>{cat.icon || '📦'}</span>
+                    <CatIcon className={`w-3.5 h-3.5 shrink-0 ${isSelected ? 'text-white' : 'text-[#0052CC]'}`} aria-hidden="true" />
                     <span className="truncate">{cat.name}</span>
                   </span>
                   {cat._count?.products !== undefined && (
@@ -185,7 +211,7 @@ export default async function ProductsPage({ searchParams }) {
                       className={`text-[10px] px-2 py-0.5 rounded-full font-mono font-semibold ${
                         isSelected
                           ? 'bg-blue-800 text-white'
-                          : 'bg-slate-100 text-slate-400'
+                          : 'bg-slate-100 text-slate-500'
                       }`}
                     >
                       {cat._count.products}
@@ -218,33 +244,33 @@ export default async function ProductsPage({ searchParams }) {
                 </span>
               )}
             </span>
-            <span className="font-medium">
+            <span className="font-medium text-slate-400">
               Page {page} of {Math.max(totalPages, 1)}
             </span>
           </div>
 
-          {/* Product Cards Grid */}
+          {/* Product Cards Grid with smooth transition */}
           {products.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <ProductGridAnimated layoutKey={`${categorySlug}-${query}-${page}`}>
               {products.map((p) => (
                 <ProductCard key={p.id} product={p} />
               ))}
-            </div>
+            </ProductGridAnimated>
           ) : (
-            <div className="bg-white rounded-3xl border border-slate-200 p-12 text-center space-y-4 shadow-2xs">
-              <div className="w-16 h-16 rounded-2xl bg-blue-50 text-[#0052CC] flex items-center justify-center mx-auto text-2xl font-bold">
-                <Search className="w-8 h-8" />
+            <div className="bg-white rounded-xl border border-slate-200 p-10 text-center space-y-4 shadow-2xs">
+              <div className="w-12 h-12 rounded-xl bg-blue-50 text-[#0052CC] flex items-center justify-center mx-auto text-xl font-bold">
+                <Search className="w-6 h-6" />
               </div>
-              <h3 className="text-xl font-bold text-[#041E42]">
+              <h3 className="text-lg font-bold text-[#041E42]">
                 No matching formulations found
               </h3>
-              <p className="text-xs sm:text-sm text-slate-500 max-w-md mx-auto leading-relaxed">
+              <p className="text-xs sm:text-sm text-slate-500 max-w-md mx-auto leading-relaxed font-normal">
                 We couldn&apos;t find items matching your search criteria. Try adjusting your query or resetting category filters.
               </p>
               <div className="pt-2">
                 <Link
                   href="/products"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#0052CC] text-white text-xs sm:text-sm font-bold hover:bg-[#0043A8] active:scale-95 transition shadow-xs"
+                  className="btn-tactile inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-[#0052CC] text-white text-xs sm:text-sm font-bold hover:bg-[#0043A8] shadow-2xs cursor-pointer"
                 >
                   <span>Reset All Filters</span>
                   <ChevronRight className="w-4 h-4" />
@@ -255,7 +281,7 @@ export default async function ProductsPage({ searchParams }) {
 
           {/* Pagination Controls */}
           {totalPages > 1 && (
-            <div className="flex flex-wrap justify-center gap-2 pt-6">
+            <div className="flex flex-wrap justify-center gap-1.5 pt-6">
               {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
                 <Link
                   key={p}
@@ -264,10 +290,10 @@ export default async function ProductsPage({ searchParams }) {
                     ...(query ? { q: query } : {}),
                     page: String(p),
                   }).toString()}`}
-                  className={`w-10 h-10 rounded-xl flex items-center justify-center text-xs font-bold transition-all ${
+                  className={`btn-tactile w-9 h-9 rounded-lg flex items-center justify-center text-xs font-bold transition-colors ${
                     p === page
-                      ? 'bg-[#0052CC] text-white shadow-sm'
-                      : 'border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 hover:border-slate-300 active:scale-95'
+                      ? 'bg-[#0052CC] text-white shadow-xs'
+                      : 'border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 hover:border-slate-300'
                   }`}
                 >
                   {p}

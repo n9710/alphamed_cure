@@ -52,16 +52,16 @@ export default async function DashboardPage() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 space-y-8">
       {/* Header */}
-      <div className="bg-white/90 backdrop-blur-md rounded-3xl border border-slate-200/80 p-6 sm:p-8 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-6">
+      <div className="bg-white rounded-2xl border border-slate-200/90 p-6 sm:p-8 shadow-2xs flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div className="space-y-2">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-navy-50 border border-navy-100 text-navy-800 text-[11px] font-semibold">
-            <Building2 className="w-3.5 h-3.5 text-medical-600" />
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200/70 text-[#0052CC] text-[11px] font-bold">
+            <Building2 className="w-3.5 h-3.5 text-emerald-600" />
             <span>INSTITUTIONAL CLIENT DESK</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-[#041E42] tracking-tight">
             Welcome back, {user.firstName || 'Partner'}
           </h1>
-          <p className="text-xs sm:text-sm text-slate-500">
+          <p className="text-xs sm:text-sm text-slate-500 font-normal">
             {user.company ? <strong className="text-slate-800 font-semibold">{user.company}</strong> : user.email} • Assigned ID: <span className="font-mono text-slate-600">CLI-{user.id?.slice(0, 6).toUpperCase()}</span>
           </p>
         </div>
@@ -69,7 +69,7 @@ export default async function DashboardPage() {
         <div className="flex flex-wrap items-center gap-3">
           <Link
             href="/products"
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition shadow-sm"
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#0052CC] hover:bg-[#0043A8] text-white text-xs sm:text-sm font-bold transition shadow-sm"
           >
             <Plus className="w-3.5 h-3.5" />
             <span>Browse Catalog</span>
@@ -160,7 +160,7 @@ export default async function DashboardPage() {
           {inquiries.length > 0 && (
             <Link
               href="/inquiry"
-              className="text-xs font-bold text-sky-600 hover:text-sky-700 flex items-center gap-1"
+              className="text-xs font-bold text-[#0052CC] hover:text-[#0043A8] flex items-center gap-1"
             >
               <span>Submit New RFQ</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -184,7 +184,7 @@ export default async function DashboardPage() {
                       Dispatched on {new Date(inq.createdAt).toLocaleDateString(undefined, { dateStyle: 'medium' })}
                     </span>
                   </div>
-                  <span className="px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-sky-50 text-sky-700 border border-sky-200/60">
+                  <span className="px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-blue-50 text-[#0052CC] border border-blue-200/60">
                     {inq.status || 'Pending Quotation'}
                   </span>
                 </div>

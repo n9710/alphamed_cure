@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import {
   Pill,
@@ -16,9 +17,12 @@ import {
   ArrowRight,
   Plus,
 } from 'lucide-react';
+import { dispatchCartUpdate } from '@/lib/motion';
 
 export default function ProductCard({ product }) {
+  const router = useRouter();
   const [copied, setCopied] = useState(false);
+  const [adding, setAdding] = useState(false);
   const hasPrice = Boolean(product.price);
 
   const copySku = (e) => {
@@ -28,6 +32,36 @@ export default function ProductCard({ product }) {
       navigator.clipboard?.writeText(product.sku);
       setCopied(true);
       setTimeout(() => setCopied(false), 1800);
+    }
+  };
+
+  const handleQuickInquire = (e) => {
+    e.preventDefault();
+    try {
+      const saved = localStorage.getItem('alphamed_inquiry_cart');
+      let cart = saved ? JSON.parse(saved) : [];
+      const existing = cart.find((it) => it.productId === product.id);
+      if (existing) {
+        existing.quantity += 1;
+      } else {
+        cart.push({
+          productId: product.id,
+          name: product.name,
+          sku: product.sku || '',
+          quantity: 1,
+          notes: '',
+        });
+      }
+      localStorage.setItem('alphamed_inquiry_cart', JSON.stringify(cart));
+      dispatchCartUpdate();
+      setAdding(true);
+      setTimeout(() => {
+        router.push('/inquiry');
+      }, 350);
+    } catch {
+      router.push(
+        `/inquiry?add=${encodeURIComponent(product.id)}&name=${encodeURIComponent(product.name)}&sku=${encodeURIComponent(product.sku || '')}&cat=${encodeURIComponent(product.category?.name || '')}`
+      );
     }
   };
 
@@ -48,51 +82,48 @@ export default function ProductCard({ product }) {
   );
 
   return (
-    <div className="group bg-white rounded-2xl border border-slate-200/90 shadow-2xs card-hover flex flex-col overflow-hidden relative">
+    <div className="group bg-white rounded-xl border border-slate-200 shadow-2xs card-hover flex flex-col overflow-hidden relative hover:border-[#0052CC]/40 hover:shadow-md transition-all duration-200 active:scale-[0.995]">
       {/* Product Visual Showcase Area */}
-      <div className="relative h-48 bg-gradient-to-b from-slate-50/90 via-blue-50/20 to-slate-100/50 border-b border-slate-100 flex items-center justify-center p-4 overflow-hidden">
+      <div className="relative h-44 bg-slate-50/60 border-b border-slate-100 flex items-center justify-center p-4 overflow-hidden">
         {/* Category Pill */}
         {product.category && (
-          <span className="absolute top-3.5 left-3.5 text-[11px] font-bold tracking-wide uppercase px-3 py-1 rounded-full bg-white/95 text-slate-700 shadow-2xs border border-slate-200/80 backdrop-blur-xs z-10 transition-colors group-hover:border-blue-300">
+          <span className="absolute top-3 left-3 text-[10px] font-bold tracking-wider uppercase px-2.5 py-1 rounded-full bg-white text-slate-700 shadow-2xs border border-slate-200/90 z-10 transition-colors group-hover:border-slate-300">
             {product.category.name}
           </span>
         )}
 
         {/* Featured Badge */}
         {product.isFeatured && (
-          <span className="absolute top-3.5 right-3.5 text-[10px] font-extrabold tracking-wider uppercase px-2.5 py-1 rounded-full bg-amber-50 text-amber-700 border border-amber-200/90 shadow-2xs z-10 flex items-center gap-1.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
+          <span className="absolute top-3 right-3 text-[10px] font-bold tracking-wider uppercase px-2.5 py-1 rounded-full bg-amber-50 text-amber-800 border border-amber-200/90 shadow-2xs z-10 flex items-center gap-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-amber-600" />
             Featured
           </span>
         )}
 
         {/* Clinical Vector Emblem Showcase */}
         <div className="relative flex items-center justify-center">
-          {/* Subtle Ambient Radial Glow */}
-          <div className="absolute inset-0 bg-blue-500/10 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-
-          <div className="w-20 h-20 rounded-2xl bg-white shadow-sm border border-slate-200/80 flex items-center justify-center text-[#0052CC] group-hover:scale-110 group-hover:shadow-md group-hover:border-blue-300 transition-all duration-300 relative z-10">
-            <CategoryIcon className="w-10 h-10 stroke-[1.75]" />
+          <div className="w-16 h-16 rounded-xl bg-white shadow-2xs border border-slate-200/90 flex items-center justify-center text-[#0052CC] group-hover:scale-[1.02] group-hover:border-[#0052CC]/40 transition-all duration-200">
+            <CategoryIcon className="w-8 h-8 stroke-[1.75]" />
           </div>
         </div>
       </div>
 
       {/* Product Details Section */}
-      <div className="p-5 sm:p-6 flex-1 flex flex-col justify-between space-y-4">
+      <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
         <div>
           {product.sku && (
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-[11px] font-mono font-medium text-slate-400">
+            <div className="flex items-center justify-between mb-1.5">
+              <span className="text-[11px] font-mono font-medium text-slate-500">
                 SKU: {product.sku}
               </span>
               <button
                 type="button"
                 onClick={copySku}
                 title="Copy SKU to clipboard"
-                className="text-[11px] text-slate-400 hover:text-[#0052CC] transition flex items-center gap-1 px-2 py-0.5 rounded-md hover:bg-slate-100 active:scale-95 cursor-pointer"
+                className="text-[11px] text-slate-400 hover:text-[#0052CC] transition-all flex items-center gap-1 px-1.5 py-0.5 rounded hover:bg-slate-100 active:scale-95 cursor-pointer"
               >
                 {copied ? (
-                  <span className="text-emerald-600 font-bold flex items-center gap-1">
+                  <span className="text-emerald-700 font-bold flex items-center gap-1">
                     <Check className="w-3 h-3 inline" /> Copied
                   </span>
                 ) : (
@@ -104,14 +135,17 @@ export default function ProductCard({ product }) {
             </div>
           )}
 
-          <h3 className="text-base sm:text-[17px] font-bold text-[#041E42] group-hover:text-[#0052CC] transition-colors duration-200 line-clamp-2 leading-snug">
-            <Link href={`/products/${product.slug}`} className="focus:outline-hidden">
+          <h3 className="text-sm sm:text-base font-bold text-[#041E42] group-hover:text-[#0052CC] transition-colors line-clamp-2 leading-snug">
+            <Link
+              href={`/products/${product.slug}`}
+              className="focus-visible:outline-2 focus-visible:outline-[#0052CC] focus-visible:outline-offset-2 rounded-sm"
+            >
               {product.name}
             </Link>
           </h3>
 
           {product.shortDesc && (
-            <p className="text-xs text-slate-500 mt-2 line-clamp-2 leading-relaxed font-normal">
+            <p className="text-xs text-slate-500 mt-1.5 line-clamp-2 leading-relaxed font-normal">
               {product.shortDesc}
             </p>
           )}
@@ -122,7 +156,7 @@ export default function ProductCard({ product }) {
           {hasPrice ? (
             <div className="space-y-1 mb-3">
               <div className="flex items-baseline gap-2">
-                <span className="text-lg font-extrabold text-[#041E42] font-mono">
+                <span className="text-lg font-bold text-[#041E42] font-mono">
                   ₹{Number(product.price.priceINR).toFixed(2)}
                 </span>
                 {product.price.priceUSD && (
@@ -130,7 +164,7 @@ export default function ProductCard({ product }) {
                     (${Number(product.price.priceUSD).toFixed(2)})
                   </span>
                 )}
-                <span className="text-xs text-slate-400 font-medium">
+                <span className="text-xs text-slate-400 font-normal">
                   / {product.price.unit}
                 </span>
               </div>
@@ -141,12 +175,12 @@ export default function ProductCard({ product }) {
               </p>
             </div>
           ) : (
-            <div className="bg-slate-50/90 rounded-xl p-3 mb-3 border border-slate-200/80 group-hover:border-blue-200 transition-colors">
+            <div className="bg-slate-50 rounded-lg p-2.5 mb-3 border border-slate-200">
               <div className="flex items-center gap-1.5 text-xs font-bold text-[#041E42]">
                 <Lock className="w-3.5 h-3.5 text-[#0052CC]" />
                 <span>B2B Contract Pricing</span>
               </div>
-              <p className="text-[11px] text-slate-500 mt-1 leading-snug">
+              <p className="text-[11px] text-slate-500 mt-1 leading-snug font-normal">
                 <Link
                   href="/login"
                   className="text-[#0052CC] hover:text-[#0043A8] font-semibold underline underline-offset-2"
@@ -160,7 +194,7 @@ export default function ProductCard({ product }) {
                 >
                   verify facility
                 </Link>{' '}
-                for live hospital rates.
+                for live rates.
               </p>
             </div>
           )}
@@ -169,18 +203,33 @@ export default function ProductCard({ product }) {
           <div className="grid grid-cols-2 gap-2 pt-1">
             <Link
               href={`/products/${product.slug}`}
-              className="w-full text-center text-xs font-bold py-2.5 px-3 rounded-xl border border-slate-200 text-[#041E42] hover:bg-slate-50 hover:border-slate-300 active:scale-95 transition-all flex items-center justify-center gap-1"
+              className="btn-tactile group/specs w-full text-center text-xs font-bold py-2 px-3 rounded-lg border border-slate-200 text-[#041E42] hover:bg-slate-50 hover:border-slate-300 transition-colors flex items-center justify-center gap-1 cursor-pointer"
             >
               <span>Specs</span>
-              <ArrowRight className="w-3.5 h-3.5" />
+              <ArrowRight className="w-3.5 h-3.5 group-hover/specs:translate-x-0.5 transition-transform duration-200" />
             </Link>
-            <Link
-              href={`/inquiry?add=${encodeURIComponent(product.id)}&name=${encodeURIComponent(product.name)}&sku=${encodeURIComponent(product.sku || '')}&cat=${encodeURIComponent(product.category?.name || '')}`}
-              className="w-full text-center text-xs font-bold py-2.5 px-3 rounded-xl bg-[#0052CC] text-white hover:bg-[#0043A8] hover:shadow-md hover:shadow-blue-600/20 active:scale-95 transition-all flex items-center justify-center gap-1"
+            <button
+              type="button"
+              onClick={handleQuickInquire}
+              disabled={adding}
+              className={`btn-tactile w-full text-center text-xs font-bold py-2 px-3 rounded-lg transition-all shadow-2xs flex items-center justify-center gap-1 cursor-pointer ${
+                adding
+                  ? 'bg-emerald-600 text-white'
+                  : 'bg-[#0052CC] text-white hover:bg-[#0043A8]'
+              }`}
             >
-              <Plus className="w-3.5 h-3.5" />
-              <span>Inquire</span>
-            </Link>
+              {adding ? (
+                <>
+                  <Check className="w-3.5 h-3.5" />
+                  <span>Added ✓</span>
+                </>
+              ) : (
+                <>
+                  <Plus className="w-3.5 h-3.5" />
+                  <span>Inquire</span>
+                </>
+              )}
+            </button>
           </div>
         </div>
       </div>
